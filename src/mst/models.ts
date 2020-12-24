@@ -8,6 +8,16 @@ const typesNodes = types.late(() =>
   types.array(types.union(BoxModel, TextModel))
 );
 
+const MediaQueryModel = types.model("MediaQueryModel", {
+  id: types.identifier,
+  size: types.number,
+});
+
+const TextStyleModel = types.model("TextStyleModel", {
+  id: types.identifier,
+  hex: types.string,
+});
+
 const FontFamily = types.model("FontFamily", {
   id: types.identifier,
   familyName: types.string,
@@ -17,14 +27,17 @@ const ColorModel = types.model("ColorModel", {
   id: types.identifier,
   hex: types.string,
 });
+
 const BoxModel = types.model("BoxModel", {
   type: types.literal("box"),
   color: types.maybe(types.reference(ColorModel)),
   children: typesNodes,
 });
+
 const TextModel = types.model("TextModel", {
   type: types.literal("text"),
   fontFamily: types.reference(FontFamily),
+
   value: types.string,
 });
 
@@ -35,6 +48,7 @@ const PageModel = types.model("Page", {
 });
 
 const ProjectModel = types.model("Project", {
+  mql: types.array(MediaQueryModel),
   baseline: types.optional(typesBaseline, 8),
   fonts: types.array(FontFamily),
   colors: types.array(ColorModel),

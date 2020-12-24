@@ -1,14 +1,18 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
-import type { TPage } from "../mst";
+import { useParams } from "react-router-dom";
 
+import type { TPage } from "../mst";
 import { Node } from "./node";
 
 interface PageComponentProps {
   page?: TPage;
 }
 
-export const PageView = (props: PageComponentProps) => {
+export const PageViewMain = (props: PageComponentProps) => {
+  let { id } = useParams();
+  console.log(id);
+
   return (
     <div>
       {props.page?.children.map((child) => (
@@ -17,3 +21,5 @@ export const PageView = (props: PageComponentProps) => {
     </div>
   );
 };
+
+export const PageView = inject("project")(observer(PageViewMain));

@@ -1,5 +1,6 @@
 import React from "react";
 import { Provider } from "mobx-react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { setupRootStore, initialState } from "./mst";
 import { ProjectMain } from "./components/project-main";
@@ -11,7 +12,13 @@ function App() {
 
   return (
     <Provider project={project}>
-      <ProjectMain />
+      <Router>
+        <Switch>
+          <Route path="/project">
+            <ProjectMain />
+          </Route>
+        </Switch>
+      </Router>
     </Provider>
   );
 }

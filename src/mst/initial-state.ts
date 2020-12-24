@@ -1,4 +1,14 @@
 export const initialState = {
+  mql: [
+    {
+      id: "md",
+      size: 640,
+    },
+    {
+      id: "lg",
+      size: 1140,
+    },
+  ],
   fonts: [
     {
       id: "inter",
