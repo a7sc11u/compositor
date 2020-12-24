@@ -5,9 +5,10 @@ import { useProject } from "../mst";
 
 import type { TProject } from "../mst";
 
-import { Main, MainHeader, MainPane } from "./layout";
+import { Main, MainHeader, MainPane, SidePane } from "./layout";
 
 import { PageView } from "./page-view";
+import { TreeView } from "./tree-view";
 import { ConfigView } from "./config-view";
 
 interface ProjectComponentProps {
@@ -25,6 +26,9 @@ export const ProjectMain = (props: ProjectComponentProps) => {
   return (
     <Main>
       <MainHeader />
+      <SidePane>
+        <TreeView page={page} />
+      </SidePane>
       <MainPane aria-label="Main Pane">
         <Switch>
           <Route path={`${path}/page`} exact={false}>
