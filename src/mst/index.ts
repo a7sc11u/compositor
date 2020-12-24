@@ -1,3 +1,3 @@
 export * from "./models";
-export * from "./setup";
+export * from "./store";
 export * from "./initial-state";

@@ -1,6 +1,7 @@
 import React from "react";
-import { inject, observer } from "mobx-react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
+
+import { useProject } from "../mst";
 
 import type { TProject } from "../mst";
 
@@ -12,11 +13,15 @@ interface ProjectComponentProps {
   project?: TProject;
 }
 
-export const ProjectMainView = (props: ProjectComponentProps) => {
-  if (!props.project) return null;
+export const ProjectMain = (props: ProjectComponentProps) => {
+  const project = useProject();
+
+  console.log(project);
+
+  if (!project) return null;
 
   const { path } = useRouteMatch();
-  const page = props.project.pages[0];
+  const page = project.pages[0];
 
   return (
     <Main>
@@ -31,5 +36,3 @@ export const ProjectMainView = (props: ProjectComponentProps) => {
     </Main>
   );
 };
-
-export const ProjectMain = inject("project")(observer(ProjectMainView));

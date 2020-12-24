@@ -4,6 +4,10 @@ const typesBaseline = types.union(
   ...[4, 5, 6, 7, 8, 9, 10, 11, 12].map(types.literal)
 );
 
+const typesViewMode = types.union(
+  ...["edit", "preview", "tree"].map(types.literal)
+);
+
 const TypeNode = types.late(() => types.union(BoxModel, TextModel));
 
 const NodeChildren = types.late(() => types.array(types.reference(TypeNode)));
@@ -53,6 +57,7 @@ const ProjectModel = types.model("Project", {
   baseline: types.optional(typesBaseline, 8),
   fonts: types.array(FontFamily),
   colors: types.array(ColorModel),
+  mode: typesViewMode,
   pages: types.array(PageModel),
   nodes: types.array(TypeNode),
 });

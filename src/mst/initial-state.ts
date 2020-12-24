@@ -1,4 +1,5 @@
 export const initialState = {
+  mode: "edit",
   mql: [
     {
       id: "md",
