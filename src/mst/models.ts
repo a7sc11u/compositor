@@ -4,9 +4,9 @@ const typesBaseline = types.union(
   ...[4, 5, 6, 7, 8, 9, 10, 11, 12].map(types.literal)
 );
 
-const typesNodes = types.late(() =>
-  types.array(types.union(BoxModel, TextModel))
-);
+const TypeNode = types.late(() => types.union(BoxModel, TextModel));
+
+const NodeChildren = types.late(() => types.array(types.reference(TypeNode)));
 
 const MediaQueryModel = types.model("MediaQueryModel", {
   id: types.identifier,
@@ -29,22 +29,23 @@ const ColorModel = types.model("ColorModel", {
 });
 
 const BoxModel = types.model("BoxModel", {
+  id: types.identifier,
   type: types.literal("box"),
   color: types.maybe(types.reference(ColorModel)),
-  children: typesNodes,
+  children: NodeChildren,
 });
 
 const TextModel = types.model("TextModel", {
+  id: types.identifier,
   type: types.literal("text"),
   fontFamily: types.reference(FontFamily),
-
   value: types.string,
 });
 
 const PageModel = types.model("Page", {
   id: types.identifier,
   title: types.string,
-  children: typesNodes,
+  children: NodeChildren,
 });
 
 const ProjectModel = types.model("Project", {
@@ -53,6 +54,7 @@ const ProjectModel = types.model("Project", {
   fonts: types.array(FontFamily),
   colors: types.array(ColorModel),
   pages: types.array(PageModel),
+  nodes: types.array(TypeNode),
 });
 
 export { ProjectModel };
@@ -65,20 +67,3 @@ export type TText = Instance<typeof TextModel>;
 
 export type TFontFamily = Instance<typeof FontFamily>;
 export type TColor = Instance<typeof ColorModel>;
-
-/** ------------------------------------------
- * EXPERIMENTAL
- ------------------------------------------ */
-
-const typesDirection = types.union(
-  ...["row", "column", "row-reverse", "color-reverse"].map(types.literal)
-);
-
-const StackModel = types.model("StackModel", {
-  type: types.literal("stack"),
-  direction: types.optional(typesDirection, "column"),
-  gap: types.optional(types.number, 0),
-  children: typesNodes,
-});
-
-export type TStack = Instance<typeof StackModel>;

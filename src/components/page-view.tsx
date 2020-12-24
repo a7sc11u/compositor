@@ -10,15 +10,12 @@ interface PageComponentProps {
 }
 
 export const PageViewMain = (props: PageComponentProps) => {
-  let { id } = useParams();
-  console.log(id);
-
   return (
-    <div>
+    <article>
       {props.page?.children.map((child) => (
-        <Node data={child} />
+        <Node key={child.id} data={child} />
       ))}
-    </div>
+    </article>
   );
 };
 

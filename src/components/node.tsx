@@ -24,7 +24,9 @@ export const Node = (props: NodeProps) => {
     <div>
       <Comp data={props.data}>
         {props.data?.children
-          ? props.data?.children?.map((child) => <Node data={child} />)
+          ? props.data?.children?.map((child) => (
+              <Node key={child.id} data={child} />
+            ))
           : null}
       </Comp>
     </div>
