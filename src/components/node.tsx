@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { observer } from "mobx-react-lite";
 
 import type { TBox, TText } from "../mst";
 
@@ -9,7 +10,7 @@ interface NodeProps {
   data: TText | TBox;
 }
 
-export const Node = (props: NodeProps) => {
+export const Node = observer((props: NodeProps) => {
   const Comp = useMemo(() => {
     switch (props.data.type) {
       case "text":
@@ -32,4 +33,4 @@ export const Node = (props: NodeProps) => {
       </Comp>
     </div>
   );
-};
+});

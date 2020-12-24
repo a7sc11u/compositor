@@ -39,12 +39,18 @@ const BoxModel = types.model("BoxModel", {
   children: NodeChildren,
 });
 
-const TextModel = types.model("TextModel", {
-  id: types.identifier,
-  type: types.literal("text"),
-  fontFamily: types.reference(FontFamily),
-  value: types.string,
-});
+const TextModel = types
+  .model("TextModel", {
+    id: types.identifier,
+    type: types.literal("text"),
+    fontFamily: types.reference(FontFamily),
+    value: types.string,
+  })
+  .actions((model) => ({
+    setValue(newValue: string) {
+      model.value = newValue;
+    },
+  }));
 
 const PageModel = types.model("Page", {
   id: types.identifier,

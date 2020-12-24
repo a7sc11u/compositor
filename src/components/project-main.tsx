@@ -8,6 +8,7 @@ import type { TProject } from "../mst";
 import { Main, MainHeader, MainPane } from "./layout";
 
 import { PageView } from "./page-view";
+import { ConfigView } from "./config-view";
 
 interface ProjectComponentProps {
   project?: TProject;
@@ -15,8 +16,6 @@ interface ProjectComponentProps {
 
 export const ProjectMain = (props: ProjectComponentProps) => {
   const project = useProject();
-
-  console.log(project);
 
   if (!project) return null;
 
@@ -30,6 +29,9 @@ export const ProjectMain = (props: ProjectComponentProps) => {
         <Switch>
           <Route path={`${path}/page`} exact={false}>
             <PageView page={page} />
+          </Route>
+          <Route path={`${path}/config`} exact={false}>
+            <ConfigView />
           </Route>
         </Switch>
       </MainPane>

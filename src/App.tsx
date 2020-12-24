@@ -1,5 +1,4 @@
 import React from "react";
-import { Provider } from "mobx-react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { setupRootStore, initialState, ProjectProvider } from "./mst";

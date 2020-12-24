@@ -1,4 +1,5 @@
 import * as React from "react";
+import { observer } from "mobx-react-lite";
 
 import type { TPage } from "../mst";
 import { Node } from "./node";
@@ -7,7 +8,7 @@ interface PageComponentProps {
   page?: TPage;
 }
 
-export const PageView = (props: PageComponentProps) => {
+export const PageView = observer((props: PageComponentProps) => {
   return (
     <article>
       {props.page?.children.map((child) => (
@@ -15,4 +16,4 @@ export const PageView = (props: PageComponentProps) => {
       ))}
     </article>
   );
-};
+});

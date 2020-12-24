@@ -1,4 +1,6 @@
 import * as React from "react";
+import { observer } from "mobx-react-lite";
+
 import type { TBox } from "../mst";
 
 interface BoxProps {
@@ -6,10 +8,10 @@ interface BoxProps {
   children: React.ReactNode;
 }
 
-export const Box = (props: BoxProps) => {
+export const Box = observer((props: BoxProps) => {
   return (
     <div style={{ color: props.data.color.hex, padding: "20px" }}>
       {props.children}
     </div>
   );
-};
+});
