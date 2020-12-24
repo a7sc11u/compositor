@@ -22,23 +22,29 @@ export const initialState = {
       children: [
         {
           type: "box",
+          color: "red",
           children: [
             {
-              type: "stack",
-              children: [
-                {
-                  type: "text",
-                  fontFamily: "inters",
-                  value: "Potato",
-                },
-                {
-                  type: "text",
-                  fontFamily: "inter",
-                  value: "Brocolli",
-                },
-              ],
+              type: "text",
+              fontFamily: "inters",
+              value: "Bread",
+            },
+            {
+              type: "text",
+              fontFamily: "inters",
+              value: "Cheese",
             },
           ],
+        },
+        {
+          type: "text",
+          fontFamily: "inters",
+          value: "Potatoes",
+        },
+        {
+          type: "text",
+          fontFamily: "inter",
+          value: "Brocolli",
         },
       ],
     },
