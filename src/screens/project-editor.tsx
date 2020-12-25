@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 import { useProject } from "../mst";
 
-import { PageView } from "./page-view";
-import { TreeView } from "./tree-view";
-import { InspectorView } from "./inspector-view";
+import { PageView } from "../editor/page-view";
+import { TreeView } from "../editor/tree-view";
+import { InspectorView } from "../editor/inspector-view";
 
-const ViewProject = styled.section`
+const StyledEditorView = styled.section`
   display: grid;
-  height: 100vh;
+  flex: 1;
   grid-template-columns: 230px 1fr 240px;
   grid-template-areas: "left main right";
 `;
@@ -37,7 +37,7 @@ export const RightPane = styled.section`
   overflow-wrap: break-word;
 `;
 
-export const EditorView = () => {
+export const ProjectEditor = () => {
   const project = useProject();
 
   if (!project) return null;
@@ -45,7 +45,7 @@ export const EditorView = () => {
   const page = project.pages[0];
 
   return (
-    <ViewProject>
+    <StyledEditorView>
       <LeftPane>
         <TreeView page={page} />
       </LeftPane>
@@ -55,6 +55,6 @@ export const EditorView = () => {
       <RightPane>
         <InspectorView project={project} />
       </RightPane>
-    </ViewProject>
+    </StyledEditorView>
   );
 };

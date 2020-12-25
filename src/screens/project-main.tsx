@@ -1,7 +1,5 @@
 import React from "react";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
-
-import { Link } from "react-router-dom";
+import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -9,8 +7,8 @@ import { useProject } from "../mst";
 
 import type { TProject } from "../mst";
 
-import { EditorView } from "../editor/editor-view";
-import { ConfigView } from "../editor/config-view";
+import { ProjectEditor } from "./project-editor";
+import { ProjectConfig } from "./project-config";
 
 export const Main = styled.main`
   display: grid;
@@ -30,13 +28,10 @@ export const MainHeader = styled.header`
 
 export const MainPane = styled.div`
   grid-area: main;
+  display: flex;
 `;
 
-interface ProjectComponentProps {
-  project?: TProject;
-}
-
-export const ProjectMain = (props: ProjectComponentProps) => {
+export const ProjectMain = () => {
   const project = useProject();
   const { path } = useRouteMatch();
 
@@ -46,15 +41,15 @@ export const ProjectMain = (props: ProjectComponentProps) => {
     <Main onClick={() => project.editor.clearSelectedNode()}>
       <MainHeader>
         <Link to={`${path}/config`}>Config</Link> &nbsp;&nbsp; | &nbsp; &nbsp;
-        <Link to={`${path}/page`}>Page</Link>
+        <Link to={`${path}/editor`}>Editor</Link>
       </MainHeader>
       <MainPane aria-label="Main Pane">
         <Switch>
-          <Route path={`${path}/page`} exact={false}>
-            <EditorView />
+          <Route path={`${path}/editor`} exact={false}>
+            <ProjectEditor />
           </Route>
           <Route path={`${path}/config`} exact={false}>
-            <ConfigView />
+            <ProjectConfig />
           </Route>
         </Switch>
       </MainPane>

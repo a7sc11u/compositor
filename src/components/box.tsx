@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react-lite";
-import { Div } from "../ui";
+import { Div } from "./div";
 import type { HTMLProps } from "../types";
 
 import type { TBox } from "../mst";
