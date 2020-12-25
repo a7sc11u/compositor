@@ -1,5 +1,7 @@
 export const initialState = {
-  mode: "edit",
+  editor: {
+    mode: "edit",
+  },
   mql: [
     {
       id: "md",
@@ -22,37 +24,75 @@ export const initialState = {
       hex: "#0000ff",
     },
     {
+      id: "grey",
+      hex: "#c0c0c0",
+    },
+    {
+      id: "black",
+      hex: "#000",
+    },
+    {
       id: "red",
       hex: "#ff0000",
+    },
+    {
+      id: "yellow",
+      hex: "#ffff00",
     },
   ],
   nodes: [
     {
       id: "nb1",
+      state: {
+        hover: false,
+      },
       type: "box",
-      color: "red",
+      color: "yellow",
+      bg: "blue",
       children: ["nt1", "nt2"],
     },
     {
       id: "nt1",
+      state: {
+        hover: false,
+      },
       type: "text",
       fontFamily: "inters",
       value: "Bread",
     },
     {
       id: "nt2",
+      state: {
+        hover: false,
+      },
       type: "text",
       fontFamily: "inters",
       value: "Cheese",
     },
     {
+      id: "nb2",
+      state: {
+        hover: false,
+      },
+      type: "box",
+      color: "black",
+      bg: "grey",
+      children: ["nt3", "nt4"],
+    },
+    {
       id: "nt3",
+      state: {
+        hover: false,
+      },
       type: "text",
       fontFamily: "inters",
-      value: "Potatoes",
+      value: "Tomatoes",
     },
     {
       id: "nt4",
+      state: {
+        hover: false,
+      },
       type: "text",
       fontFamily: "inter",
       value: "Brocolli",
@@ -62,7 +102,7 @@ export const initialState = {
     {
       id: "x1p2q3r",
       title: "New Page",
-      children: ["nb1", "nt3", "nt4"],
+      children: ["nb1", "nb2"],
     },
   ],
 };

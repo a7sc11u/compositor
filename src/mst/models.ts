@@ -17,11 +17,6 @@ const MediaQueryModel = types.model("MediaQueryModel", {
   size: types.number,
 });
 
-const TextStyleModel = types.model("TextStyleModel", {
-  id: types.identifier,
-  hex: types.string,
-});
-
 const FontFamily = types.model("FontFamily", {
   id: types.identifier,
   familyName: types.string,
@@ -32,16 +27,29 @@ const ColorModel = types.model("ColorModel", {
   hex: types.string,
 });
 
+const ElementState = types
+  .model("ElementState", {
+    hover: types.boolean,
+  })
+  .actions((model) => ({
+    setHover(hover: boolean) {
+      model.hover = hover;
+    },
+  }));
+
 const BoxModel = types.model("BoxModel", {
   id: types.identifier,
+  state: ElementState,
   type: types.literal("box"),
   color: types.maybe(types.reference(ColorModel)),
+  bg: types.maybe(types.reference(ColorModel)),
   children: NodeChildren,
 });
 
 const TextModel = types
   .model("TextModel", {
     id: types.identifier,
+    state: ElementState,
     type: types.literal("text"),
     fontFamily: types.reference(FontFamily),
     value: types.string,
@@ -58,12 +66,26 @@ const PageModel = types.model("Page", {
   children: NodeChildren,
 });
 
+const EditorState = types
+  .model("EditorState", {
+    mode: typesViewMode,
+    selectedNode: types.maybeNull(types.reference(TypeNode)),
+  })
+  .actions((model) => ({
+    setSelectedNode(newValue: String) {
+      model.selectedNode = newValue;
+    },
+    clearSelectedNode() {
+      model.selectedNode = null;
+    },
+  }));
+
 const ProjectModel = types.model("Project", {
+  editor: EditorState,
   mql: types.array(MediaQueryModel),
   baseline: types.optional(typesBaseline, 8),
   fonts: types.array(FontFamily),
   colors: types.array(ColorModel),
-  mode: typesViewMode,
   pages: types.array(PageModel),
   nodes: types.array(TypeNode),
 });
