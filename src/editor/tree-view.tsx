@@ -2,7 +2,7 @@ import * as React from "react";
 import { observer } from "mobx-react-lite";
 
 import type { TPage } from "../mst";
-import { TreeNode } from "./node-tree";
+import { TreeNode } from "../components/node-tree";
 
 interface TreeComponentProps {
   page?: TPage;
@@ -10,10 +10,10 @@ interface TreeComponentProps {
 
 export const TreeView = observer((props: TreeComponentProps) => {
   return (
-    <article>
+    <div>
       {props.page?.children.map((child) => (
         <TreeNode key={child.id} data={child} />
       ))}
-    </article>
+    </div>
   );
 });

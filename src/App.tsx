@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { setupRootStore, initialState, ProjectProvider } from "./mst";
-import { ProjectMain } from "./components/project-main";
+
+import { ProjectMain } from "./screens/project-main";
+import { ScreenLanding } from "./screens/landing";
 
 import "./App.css";
 
@@ -15,6 +17,9 @@ function App() {
         <Switch>
           <Route path="/project">
             <ProjectMain />
+          </Route>
+          <Route path="/">
+            <ScreenLanding />
           </Route>
         </Switch>
       </Router>

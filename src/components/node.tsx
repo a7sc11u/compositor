@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { observer } from "mobx-react-lite";
 
-import { useInteractiveNode } from "./use-interactive-node";
+import { useInteractiveNode } from "../hooks/use-interactive-node";
 import type { TBox, TText } from "../mst";
 
 import { Text } from "./text";
