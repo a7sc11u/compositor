@@ -1,5 +1,37 @@
 import { types, Instance } from "mobx-state-tree";
 
+export const uuid = () =>
+  `${Math.random().toString(36).substring(2) + Date.now().toString(36)}`;
+
+const createComponent = (type) => {
+  switch (type) {
+    case "text":
+      return TextModel.create({
+        id: uuid(),
+        type: "text",
+        fontFamily: "averta-regular",
+        fontSize: 32,
+        fontStyle: "italic",
+        fontWeight: 700,
+        value: "New Text",
+        state: {
+          hover: false,
+        },
+      });
+    case "box":
+      return BoxModel.create({
+        id: uuid(),
+        type: "box",
+        color: "black",
+        bg: "grey",
+        children: [],
+        state: {
+          hover: false,
+        },
+      });
+  }
+};
+
 const typesBaseline = types.union(
   ...[4, 5, 6, 7, 8, 9, 10, 11, 12].map(types.literal)
 );
@@ -87,11 +119,17 @@ const TextModel = types
     },
   }));
 
-const PageModel = types.model("Page", {
-  id: types.identifier,
-  title: types.string,
-  children: NodeChildren,
-});
+const PageModel = types
+  .model("Page", {
+    id: types.identifier,
+    title: types.string,
+    children: NodeChildren,
+  })
+  .actions((model) => ({
+    addChild(nodeID: string) {
+      model.children.push(nodeID);
+    },
+  }));
 
 const EditorState = types
   .model("EditorState", {
@@ -107,15 +145,23 @@ const EditorState = types
     },
   }));
 
-const ProjectModel = types.model("Project", {
-  editor: EditorState,
-  mql: types.array(MediaQueryModel),
-  baseline: types.optional(typesBaseline, 8),
-  fonts: types.array(FontFace),
-  colors: types.array(ColorModel),
-  pages: types.array(PageModel),
-  nodes: types.array(TypeNode),
-});
+const ProjectModel = types
+  .model("Project", {
+    editor: EditorState,
+    mql: types.array(MediaQueryModel),
+    baseline: types.optional(typesBaseline, 8),
+    fonts: types.array(FontFace),
+    colors: types.array(ColorModel),
+    pages: types.array(PageModel),
+    nodes: types.array(TypeNode),
+  })
+  .actions((model) => ({
+    createNode(type: String) {
+      const node = createComponent(type);
+      model.nodes.push(node);
+      return node;
+    },
+  }));
 
 export { ProjectModel };
 

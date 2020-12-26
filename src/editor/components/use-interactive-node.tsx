@@ -1,6 +1,6 @@
 import { useRef, MouseEvent } from "react";
-import type { TBox, TText } from "../mst";
-import { useProject } from "../mst";
+import type { TBox, TText } from "../../mst";
+import { useProject } from "../../mst";
 
 export const useInteractiveNode = (node: TText | TBox) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -12,7 +12,6 @@ export const useInteractiveNode = (node: TText | TBox) => {
       event.preventDefault();
       event.stopPropagation();
       node.state.setHover(true);
-      console.log(node);
     },
     onMouseOut: () => {
       node.state.setHover(false);
@@ -25,7 +24,7 @@ export const useInteractiveNode = (node: TText | TBox) => {
   };
 
   let style = {
-    border: node.state.hover ? "1px solid red" : "none",
+    boxShadow: node.state.hover ? `#ff00cc 0px 0px 0px 2px inset` : "none",
   };
 
   return { events, style, ref };

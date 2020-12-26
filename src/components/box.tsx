@@ -18,8 +18,8 @@ export const Box = observer(
         ref={ref}
         style={{
           ...style,
-          backgroundColor: data.bg.hex,
-          color: data.color.hex,
+          backgroundColor: data.bg?.hex,
+          color: data.color?.hex,
           padding: "16px",
         }}
       >

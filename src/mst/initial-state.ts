@@ -289,12 +289,20 @@ export const initialState = {
       value: "Brocolli",
       name: "txt-brocolli",
     },
+    {
+      id: "nb3",
+      state: {
+        hover: false,
+      },
+      type: "box",
+      children: [],
+    },
   ],
   pages: [
     {
       id: "x1p2q3r",
       title: "New Page",
-      children: ["nb1", "nb2"],
+      children: ["nb1", "nb2", "nb3"],
     },
   ],
 };
