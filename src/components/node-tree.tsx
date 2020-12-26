@@ -21,7 +21,7 @@ export const TreeNode = observer((props: NodeProps) => {
       ref={ref}
       {...events}
     >
-      {props.data.type}
+      {props.data.name || props.data.type}
       {props.data?.children ? (
         <>
           <div

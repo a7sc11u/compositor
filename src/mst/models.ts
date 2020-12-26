@@ -17,9 +17,30 @@ const MediaQueryModel = types.model("MediaQueryModel", {
   size: types.number,
 });
 
-const FontFamily = types.model("FontFamily", {
+const FontFile = types.model("FontFile", {
+  script: types.maybeNull(types.string),
+  woff: types.string,
+  unicodeRange: types.maybeNull(types.string),
+});
+
+const FontMetrics = types.model("FontMetrics", {
+  ascent: types.maybeNull(types.number),
+  descent: types.maybeNull(types.number),
+  capHeight: types.maybeNull(types.number),
+  xHeight: types.maybeNull(types.number),
+  lineGap: types.maybeNull(types.number),
+  unitsPerEm: types.maybeNull(types.number),
+});
+
+const FontFace = types.model("FontFace", {
   id: types.identifier,
   familyName: types.string,
+  weight: types.union(types.number, types.array(types.number)),
+  italic: types.union(types.boolean, types.array(types.number)),
+  metrics: FontMetrics,
+  files: types.array(FontFile),
+
+  features: types.maybeNull(types.array(types.string)),
 });
 
 const ColorModel = types.model("ColorModel", {
@@ -39,6 +60,7 @@ const ElementState = types
 
 const BoxModel = types.model("BoxModel", {
   id: types.identifier,
+  name: types.maybeNull(types.string),
   state: ElementState,
   type: types.literal("box"),
   color: types.maybe(types.reference(ColorModel)),
@@ -49,9 +71,14 @@ const BoxModel = types.model("BoxModel", {
 const TextModel = types
   .model("TextModel", {
     id: types.identifier,
+    name: types.maybeNull(types.string),
     state: ElementState,
     type: types.literal("text"),
-    fontFamily: types.reference(FontFamily),
+    fontFamily: types.reference(FontFace),
+    fontSize: types.number,
+    fontWeight: types.number,
+    fontStyle: types.enumeration("style", ["normal", "italic"]),
+    featureSettings: types.maybeNull(types.array(types.string)),
     value: types.string,
   })
   .actions((model) => ({
@@ -84,7 +111,7 @@ const ProjectModel = types.model("Project", {
   editor: EditorState,
   mql: types.array(MediaQueryModel),
   baseline: types.optional(typesBaseline, 8),
-  fonts: types.array(FontFamily),
+  fonts: types.array(FontFace),
   colors: types.array(ColorModel),
   pages: types.array(PageModel),
   nodes: types.array(TypeNode),
@@ -98,5 +125,5 @@ export type TPage = Instance<typeof PageModel>;
 export type TBox = Instance<typeof BoxModel>;
 export type TText = Instance<typeof TextModel>;
 
-export type TFontFamily = Instance<typeof FontFamily>;
+export type TFontFace = Instance<typeof FontFace>;
 export type TColor = Instance<typeof ColorModel>;

@@ -23,7 +23,6 @@ export const MainHeader = styled.header`
   grid-area: header;
   padding: 8px;
   border-bottom: 3px solid #2a2a2a;
-  font-size: 13px;
 `;
 
 export const MainPane = styled.div`

@@ -21,7 +21,7 @@ const LeftPane = styled.section`
   border-right: 3px solid #2a2a2a;
   flex: 1;
   padding: 8px;
-  font-size: 13px;
+  font-size: 14px;
 `;
 
 const MainPane = styled.section`

@@ -9,6 +9,7 @@
   "dependencies": {
     "@radix-ui/react-polymorphic": "^0.0.1",
     "@types/styled-components": "^5.1.7",
+    "fontkit": "^1.8.1",
     "mobx": "^6.0.4",
     "mobx-react-lite": "^3.1.6",
     "mobx-state-tree": "^4.0.2",
@@ -25,6 +26,7 @@
     "@snowpack/web-test-runner-plugin": "^0.1.5",
     "@testing-library/react": "^11.0.0",
     "@types/chai": "^4.2.13",
+    "@types/fontkit": "^1.8.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/snowpack-env": "^2.3.2",
