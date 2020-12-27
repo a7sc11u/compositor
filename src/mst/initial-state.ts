@@ -229,8 +229,8 @@ export const initialState = {
             hover: false,
           },
           type: "box",
-          color: "yellow",
-          bg: "blue",
+          color: "blue",
+          bg: "yellow",
           children: ["nt1", "nt2"],
         },
         {

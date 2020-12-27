@@ -13,7 +13,12 @@ export const useDropNode = ({
   enabled?: boolean;
 }) => {
   const handleDrop = React.useCallback((item) => {
-    node.createChild(item.componentType);
+    if (item.type === "new") {
+      node.createChild(item.componentType);
+      return;
+    }
+
+    // node.moveToChildren(item.node);
   }, []);
 
   const [{ isOver }, drop] = useDrop({

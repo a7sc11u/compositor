@@ -1,4 +1,4 @@
-import { useRef, MouseEvent } from "react";
+import { useRef, MouseEvent, useEffect } from "react";
 import { useDrag } from "react-dnd";
 
 import type { TNode } from "../mst";
@@ -16,7 +16,10 @@ export const useInteractiveNode = ({
   const ref = useRef<HTMLDivElement>(null);
 
   const [_, drag] = useDrag({
-    item: { type: type, componentType: node.type },
+    item: { type: type, node: node },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
 
   const project = useProject();
