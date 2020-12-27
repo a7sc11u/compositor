@@ -36,8 +36,11 @@ export const useInteractiveNode = ({
   };
 
   let style = {
-    boxShadow:
-      node.state.hover || isOver ? `#ff00cc 0px 0px 0px 2px inset` : "none",
+    boxShadow: isOver
+      ? `#ff00cc 0px 0px 0px 2px inset`
+      : node.state.hover || project.editor.selectedNode?.id === node.id
+      ? `#00ffcc 0px 0px 0px 2px inset`
+      : "none",
   };
 
   return { events, style, ref: drag(ref) };
