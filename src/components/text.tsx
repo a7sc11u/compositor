@@ -17,7 +17,7 @@ interface StyledTextProps {
   fontStyle: string;
 }
 
-const TextComponent = styled.span<StyledTextProps>`
+const StyledText = styled.span<StyledTextProps>`
   font-family: ${(props) => props.familyName};
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
@@ -27,7 +27,7 @@ const TextComponent = styled.span<StyledTextProps>`
 export const Text = observer(
   ({ data, ...rest }: TextProps, ref: React.Ref<any>) => {
     return (
-      <TextComponent
+      <StyledText
         {...rest}
         as="p"
         ref={ref}
@@ -37,7 +37,7 @@ export const Text = observer(
         fontStyle={data.fontStyle}
       >
         {data.value}
-      </TextComponent>
+      </StyledText>
     );
   },
   { forwardRef: true }

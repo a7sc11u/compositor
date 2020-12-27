@@ -1,10 +1,14 @@
 import * as React from "react";
 import { observer } from "mobx-react-lite";
-import { Div } from "./div";
+import styled from "styled-components";
+
 import type { HTMLProps } from "../types";
 
 import type { TBox } from "../mst";
 
+const Div = styled.div`
+  user-select: none;
+`;
 interface BoxProps extends HTMLProps<"div"> {
   data: TBox;
   children: React.ReactNode;

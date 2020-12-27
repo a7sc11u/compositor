@@ -2,29 +2,32 @@ import * as React from "react";
 import { observer } from "mobx-react-lite";
 import { useDrop } from "react-dnd";
 
-import { TPage, useProject } from "../mst";
+import type { TPage } from "../mst";
 import { Node } from "./components/node";
+import { useDropNode } from "./use-drop-node";
 
 interface PageComponentProps {
   page: TPage;
 }
 
 export const PageView = observer((props: PageComponentProps) => {
-  const project = useProject();
-
-  const handleDrop = React.useCallback(
-    (item) => {
-      const node = project.createNode(item.type);
-      props.page.addChild(node.id);
-    },
-    [project]
-  );
+  // const { isOver, drop } = useDropNode(props.page);
+  const handleDrop = React.useCallback((item) => {
+    const node = props.page.createNode(item.componentType);
+    props.page.addChild(node.id);
+  }, []);
 
   const [{ isOver, canDrop }, ref] = useDrop({
-    accept: ["text", "box"],
-    drop: handleDrop,
+    accept: ["component"],
+    drop: (item, monitor) => {
+      if (!monitor.isOver()) {
+        return;
+      }
+
+      handleDrop(item);
+    },
     collect: (monitor) => ({
-      isOver: monitor.isOver(),
+      isOver: monitor.isOver({ shallow: true }),
       canDrop: true,
     }),
   });

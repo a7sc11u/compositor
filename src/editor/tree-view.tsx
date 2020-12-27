@@ -10,18 +10,13 @@ interface TreeComponentProps {
 }
 
 export const TreeView = observer((props: TreeComponentProps) => {
-  const project = useProject();
-
-  const handleDrop = React.useCallback(
-    (item) => {
-      const node = project.createNode(item.type);
-      props.page.addChild(node.id);
-    },
-    [project]
-  );
+  const handleDrop = React.useCallback((item) => {
+    const node = props.page.createNode(item.componentType);
+    props.page.addChild(node.id);
+  }, []);
 
   const [{ isOver, canDrop }, ref] = useDrop({
-    accept: ["text", "box"],
+    accept: "component",
     drop: handleDrop,
     collect: (monitor) => ({
       isOver: monitor.isOver(),

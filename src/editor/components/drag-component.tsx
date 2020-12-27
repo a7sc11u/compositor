@@ -11,12 +11,12 @@ export const DragComponent: React.FC<DragComponentProps> = ({
   label,
 }) => {
   const [_, ref] = useDrag({
-    item: { type: type },
+    item: { type: "component", componentType: type },
   });
 
   return (
-    <div ref={ref}>
+    <button ref={ref}>
       {label}-{type}
-    </div>
+    </button>
   );
 };

@@ -1,19 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { observer } from "mobx-react-lite";
 
-import { useInteractiveNode } from "./use-interactive-node";
-import type { TBox, TText } from "../../mst";
+import { useDropNode } from "../use-drop-node";
+import { useInteractiveNode } from "../use-interactive-node";
 
 import { Text } from "../../components/text";
 import { Box } from "../../components/box";
 
-interface NodeProps {
-  data: TText | TBox;
-}
 
-export const Node = observer(({ data }: NodeProps) => {
+export const Node = observer((props) => {
+  const { data } = props;
   const Component = useMemo(() => {
-    let Comp: typeof Text | typeof Box;
+    let Comp
     switch (data.type) {
       case "text":
         Comp = Text;
@@ -26,10 +24,11 @@ export const Node = observer(({ data }: NodeProps) => {
     return Comp;
   }, [data]);
 
+  const { drop, isOver } = useDropNode(["text", "box"], true);
   const { events, style, ref } = useInteractiveNode(data);
 
   return (
-    <Component data={data} {...events} ref={ref} style={style}>
+    <Component data={data} {...events} ref={drop(ref)} style={style}>
       {data?.children
         ? data?.children?.map((child) => <Node key={child.id} data={child} />)
         : null}

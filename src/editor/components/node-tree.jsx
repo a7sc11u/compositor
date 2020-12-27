@@ -1,14 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { useInteractiveNode } from "./use-interactive-node";
+import { useInteractiveNode } from "../use-interactive-node";
 
-import type { TBox, TText } from "../../mst";
-
-interface NodeProps {
-  data: TText | TBox;
-}
-
-export const TreeNode = observer((props: NodeProps) => {
+export const TreeNode = observer((props) => {
   const { events, ref } = useInteractiveNode(props.data);
 
   return (

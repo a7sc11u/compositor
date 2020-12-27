@@ -1,9 +1,15 @@
 import { useRef, MouseEvent } from "react";
-import type { TBox, TText } from "../../mst";
-import { useProject } from "../../mst";
+import { useDrag } from "react-dnd";
 
-export const useInteractiveNode = (node: TText | TBox) => {
+import type { TNode } from "../mst";
+import { useProject } from "../mst";
+
+export const useInteractiveNode = (node: TNode) => {
   const ref = useRef<HTMLDivElement>(null);
+
+  const [_, drag] = useDrag({
+    item: { type: "component", componentType: node.type },
+  });
 
   const project = useProject();
 
@@ -27,5 +33,5 @@ export const useInteractiveNode = (node: TText | TBox) => {
     boxShadow: node.state.hover ? `#ff00cc 0px 0px 0px 2px inset` : "none",
   };
 
-  return { events, style, ref };
+  return { events, style, ref: drag(ref) };
 };

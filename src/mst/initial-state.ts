@@ -217,92 +217,92 @@ export const initialState = {
       hex: "#ffff00",
     },
   ],
-  nodes: [
-    {
-      id: "nb1",
-      state: {
-        hover: false,
-      },
-      type: "box",
-      color: "yellow",
-      bg: "blue",
-      children: ["nt1", "nt2"],
-    },
-    {
-      id: "nt1",
-      state: {
-        hover: false,
-      },
-      type: "text",
-      fontFamily: "averta-bold",
-      fontSize: 32,
-      fontStyle: "normal",
-      fontWeight: 700,
-      value: "Bread",
-    },
-    {
-      id: "nt2",
-      state: {
-        hover: false,
-      },
-      type: "text",
-      fontFamily: "averta-bolditalic",
-      fontSize: 32,
-      fontStyle: "italic",
-      fontWeight: 700,
-      value: "Cheese",
-    },
-    {
-      id: "nb2",
-      state: {
-        hover: false,
-      },
-      name: "box-veggie",
-      type: "box",
-      color: "black",
-      bg: "grey",
-      children: ["nt3", "nt4"],
-    },
-    {
-      id: "nt3",
-      state: {
-        hover: false,
-      },
-      type: "text",
-      fontFamily: "averta-regular",
-      fontSize: 32,
-      fontStyle: "normal",
-      fontWeight: 400,
-      value: "Tomatoes",
-      name: "txt-tomatoes",
-    },
-    {
-      id: "nt4",
-      state: {
-        hover: false,
-      },
-      type: "text",
-      fontFamily: "averta-regularitalic",
-      fontSize: 32,
-      fontStyle: "italic",
-      fontWeight: 400,
-      value: "Brocolli",
-      name: "txt-brocolli",
-    },
-    {
-      id: "nb3",
-      state: {
-        hover: false,
-      },
-      type: "box",
-      children: [],
-    },
-  ],
   pages: [
     {
       id: "x1p2q3r",
       title: "New Page",
       children: ["nb1", "nb2", "nb3"],
+      nodes: [
+        {
+          id: "nb1",
+          state: {
+            hover: false,
+          },
+          type: "box",
+          color: "yellow",
+          bg: "blue",
+          children: ["nt1", "nt2"],
+        },
+        {
+          id: "nt1",
+          state: {
+            hover: false,
+          },
+          type: "text",
+          fontFamily: "averta-bold",
+          fontSize: 32,
+          fontStyle: "normal",
+          fontWeight: 700,
+          value: "Bread",
+        },
+        {
+          id: "nt2",
+          state: {
+            hover: false,
+          },
+          type: "text",
+          fontFamily: "averta-bolditalic",
+          fontSize: 32,
+          fontStyle: "italic",
+          fontWeight: 700,
+          value: "Cheese",
+        },
+        {
+          id: "nb2",
+          state: {
+            hover: false,
+          },
+          name: "box-veggie",
+          type: "box",
+          color: "black",
+          bg: "grey",
+          children: ["nt3", "nt4"],
+        },
+        {
+          id: "nt3",
+          state: {
+            hover: false,
+          },
+          type: "text",
+          fontFamily: "averta-regular",
+          fontSize: 32,
+          fontStyle: "normal",
+          fontWeight: 400,
+          value: "Tomatoes",
+          name: "txt-tomatoes",
+        },
+        {
+          id: "nt4",
+          state: {
+            hover: false,
+          },
+          type: "text",
+          fontFamily: "averta-regularitalic",
+          fontSize: 32,
+          fontStyle: "italic",
+          fontWeight: 400,
+          value: "Brocolli",
+          name: "txt-brocolli",
+        },
+        {
+          id: "nb3",
+          state: {
+            hover: false,
+          },
+          type: "box",
+          children: [],
+        },
+      ],
     },
   ],
 };

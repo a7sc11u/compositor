@@ -32,6 +32,8 @@ const createComponent = (type) => {
   }
 };
 
+const NodeChildren = types.late(() => types.array(types.reference(TypeNode)));
+
 const typesBaseline = types.union(
   ...[4, 5, 6, 7, 8, 9, 10, 11, 12].map(types.literal)
 );
@@ -39,10 +41,6 @@ const typesBaseline = types.union(
 const typesViewMode = types.union(
   ...["edit", "preview", "tree"].map(types.literal)
 );
-
-const TypeNode = types.late(() => types.union(BoxModel, TextModel));
-
-const NodeChildren = types.late(() => types.array(types.reference(TypeNode)));
 
 const MediaQueryModel = types.model("MediaQueryModel", {
   id: types.identifier,
@@ -119,13 +117,22 @@ const TextModel = types
     },
   }));
 
+const TypeNode = types.union(BoxModel, TextModel);
+
 const PageModel = types
   .model("Page", {
     id: types.identifier,
     title: types.string,
     children: NodeChildren,
+    nodes: types.array(TypeNode),
   })
   .actions((model) => ({
+    createNode(type: String) {
+      const node = createComponent(type);
+      model.nodes.push(node);
+      return node;
+    },
+
     addChild(nodeID: string) {
       model.children.push(nodeID);
     },
@@ -145,23 +152,14 @@ const EditorState = types
     },
   }));
 
-const ProjectModel = types
-  .model("Project", {
-    editor: EditorState,
-    mql: types.array(MediaQueryModel),
-    baseline: types.optional(typesBaseline, 8),
-    fonts: types.array(FontFace),
-    colors: types.array(ColorModel),
-    pages: types.array(PageModel),
-    nodes: types.array(TypeNode),
-  })
-  .actions((model) => ({
-    createNode(type: String) {
-      const node = createComponent(type);
-      model.nodes.push(node);
-      return node;
-    },
-  }));
+const ProjectModel = types.model("Project", {
+  editor: EditorState,
+  mql: types.array(MediaQueryModel),
+  baseline: types.optional(typesBaseline, 8),
+  fonts: types.array(FontFace),
+  colors: types.array(ColorModel),
+  pages: types.array(PageModel),
+});
 
 export { ProjectModel };
 
@@ -170,6 +168,7 @@ export type TPage = Instance<typeof PageModel>;
 
 export type TBox = Instance<typeof BoxModel>;
 export type TText = Instance<typeof TextModel>;
+export type TNode = TBox | TText;
 
 export type TFontFace = Instance<typeof FontFace>;
 export type TColor = Instance<typeof ColorModel>;
