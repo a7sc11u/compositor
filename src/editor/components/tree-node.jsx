@@ -1,9 +1,11 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { useInteractiveNode } from "../use-interactive-node";
+import { TreeLeaf } from './tree-leaf';
 
 export const TreeNode = observer((props) => {
-  const { events, ref } = useInteractiveNode({node: props.model});
+  const { events, ref } = useInteractiveNode({node: props.model, type:"tree"});
+  const { model } = props;
 
   return (
     <div
@@ -16,19 +18,12 @@ export const TreeNode = observer((props) => {
       {...events}
     >
       {props.model.name || props.model.type}
-      {props.model?.children ? (
-        <>
-          <div
-            style={{
-              paddingLeft: "8px",
-            }}
-          >
-            {props.model?.children?.map((node) => (
-              <TreeNode key={node.id} model={node} />
-            ))}
-          </div>
-        </>
-      ) : null}
+      {model?.children
+        ? model?.children?.map((node) => node.leaf ? (
+          <TreeLeaf key={node.id} model={node} />
+        ) : (
+          <TreeNode key={node.id} model={node} />
+        )): null}
     </div>
   );
 });

@@ -9,13 +9,20 @@ import { Text } from "../../components/text";
 export const Leaf = observer((props) => {
   const { model } = props;
 
-  const { events, style, ref } = useInteractiveNode({node: model});
+  const { events, style, ref } = useInteractiveNode({node: model, type:'node'});
+
+  const Component = useMemo(() => {
+    let Comp
+    switch (model.type) {
+     
+      default:
+        Comp = Text;
+    }
+
+    return Comp;
+  }, [model]);
 
   return (
-    <Text model={model} {...events} ref={ref} style={style}>
-      {model?.children
-        ? model?.children?.map((node) => <Node key={node.id} model={node} />)
-        : null}
-    </Text>
+    <Component model={model} {...events} ref={ref} style={style} />
   );
 });

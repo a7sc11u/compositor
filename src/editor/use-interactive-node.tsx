@@ -6,15 +6,17 @@ import { useProject } from "../mst";
 
 export const useInteractiveNode = ({
   node,
+  type,
   isOver,
 }: {
   node: TNode;
+  type: string;
   isOver: boolean;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [_, drag] = useDrag({
-    item: { type: "component", componentType: node.type },
+    item: { type: type, componentType: node.type },
   });
 
   const project = useProject();
@@ -37,9 +39,11 @@ export const useInteractiveNode = ({
 
   let style = {
     boxShadow: isOver
-      ? `#ff00cc 0px 0px 0px 2px inset`
-      : node.state.hover || project.editor.selectedNode?.id === node.id
+      ? `#0000ff 0px 0px 0px 2px inset`
+      : node.state.hover
       ? `#00ffcc 0px 0px 0px 2px inset`
+      : project.editor.selectedNode?.id === node.id
+      ? `#00ff00 0px 0px 0px 2px inset`
       : "none",
   };
 

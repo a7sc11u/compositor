@@ -11,7 +11,7 @@ export const DragComponent: React.FC<DragComponentProps> = ({
   label,
 }) => {
   const [_, ref] = useDrag({
-    item: { type: "component", componentType: type },
+    item: { type: "new", componentType: type },
   });
 
   return <button ref={ref}>{label}</button>;

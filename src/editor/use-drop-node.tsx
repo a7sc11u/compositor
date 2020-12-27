@@ -5,9 +5,11 @@ import type { TNode } from "src/mst";
 
 export const useDropNode = ({
   node,
+  accept,
   enabled = true,
 }: {
   node: TNode;
+  accept: string | string[];
   enabled?: boolean;
 }) => {
   const handleDrop = React.useCallback((item) => {
@@ -15,7 +17,7 @@ export const useDropNode = ({
   }, []);
 
   const [{ isOver }, drop] = useDrop({
-    accept: "component",
+    accept: accept,
     collect: (monitor) => ({
       isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
     }),

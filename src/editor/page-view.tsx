@@ -30,12 +30,15 @@ const StyledPage = styled.article<StyledPageProps>`
     bottom: 0;
     pointer-events: none;
     box-shadow: ${(props) =>
-      props.isOver ? `#ff00cc 0px 0px 0px 2px inset` : "none"};
+      props.isOver ? `#0000ff 0px 0px 0px 2px inset` : "none"};
   }
 `;
 
 export const PageView = observer((props: PageComponentProps) => {
-  const { isOver, drop } = useDropNode({ node: props.page });
+  const { isOver, drop } = useDropNode({
+    node: props.page,
+    accept: ["new", "node"],
+  });
 
   let style = {};
 

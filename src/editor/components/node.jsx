@@ -21,8 +21,8 @@ export const Node = observer((props) => {
     return Comp;
   }, [model]);
 
-  const { drop, isOver } = useDropNode({node: model});
-  const { events, style, ref } = useInteractiveNode({node: model, isOver});
+  const { drop, isOver } = useDropNode({node: model, accept: ['new', 'node']});
+  const { events, style, ref } = useInteractiveNode({node: model, type:'node', isOver});
 
   return (
     <Component model={model} {...events} ref={drop(ref)} style={style}>
