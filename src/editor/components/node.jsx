@@ -1,37 +1,37 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, {  useMemo } from "react";
 import { observer } from "mobx-react-lite";
 
 import { useDropNode } from "../use-drop-node";
 import { useInteractiveNode } from "../use-interactive-node";
 
-import { Text } from "../../components/text";
 import { Box } from "../../components/box";
 
+import {Leaf} from './leaf';
 
 export const Node = observer((props) => {
-  const { data } = props;
+  const { model } = props;
   const Component = useMemo(() => {
     let Comp
-    switch (data.type) {
-      case "text":
-        Comp = Text;
-        break;
-
+    switch (model.type) {
+     
       default:
         Comp = Box;
     }
 
     return Comp;
-  }, [data]);
+  }, [model]);
 
-  const { drop, isOver } = useDropNode(["text", "box"], true);
-  const { events, style, ref } = useInteractiveNode(data);
+  const { drop, isOver } = useDropNode({node: model});
+  const { events, style, ref } = useInteractiveNode({node: model, isOver});
 
   return (
-    <Component data={data} {...events} ref={drop(ref)} style={style}>
-      {data?.children
-        ? data?.children?.map((child) => <Node key={child.id} data={child} />)
-        : null}
+    <Component model={model} {...events} ref={drop(ref)} style={style}>
+      {model?.children
+        ? model?.children?.map((node) => node.leaf ? (
+          <Leaf key={node.id} model={node} />
+        ) : (
+          <Node key={node.id} model={node} />
+        )): null}
     </Component>
   );
 });

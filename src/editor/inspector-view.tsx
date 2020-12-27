@@ -10,11 +10,10 @@ interface InspectorComponentProps {
 
 export const InspectorView = observer((props: InspectorComponentProps) => {
   if (props.project.editor.selectedNode) {
-    const model = getType(props.project.editor.selectedNode);
-    const members = getMembers(props.project.editor.selectedNode);
-    const path = getPath(props.project.editor.selectedNode);
-
-    console.log(members.properties);
+    // const model = getType(props.project.editor.selectedNode);
+    // const members = getMembers(props.project.editor.selectedNode);
+    // const path = getPath(props.project.editor.selectedNode);
+    // console.log(members.properties);
   }
   return <div>{JSON.stringify(props.project.editor.selectedNode)}</div>;
 });

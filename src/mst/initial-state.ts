@@ -202,7 +202,7 @@ export const initialState = {
     },
     {
       id: "grey",
-      hex: "#c0c0c0",
+      hex: "rgba(0,0,0,0.2)",
     },
     {
       id: "black",
@@ -220,8 +220,8 @@ export const initialState = {
   pages: [
     {
       id: "x1p2q3r",
-      title: "New Page",
-      children: ["nb1", "nb2", "nb3"],
+      title: "A Page",
+      children: ["nb1", "nb2"],
       nodes: [
         {
           id: "nb1",
@@ -293,14 +293,6 @@ export const initialState = {
           fontWeight: 400,
           value: "Brocolli",
           name: "txt-brocolli",
-        },
-        {
-          id: "nb3",
-          state: {
-            hover: false,
-          },
-          type: "box",
-          children: [],
         },
       ],
     },

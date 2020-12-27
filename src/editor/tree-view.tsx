@@ -1,8 +1,8 @@
 import * as React from "react";
 import { observer } from "mobx-react-lite";
-import { useDrop } from "react-dnd";
 
-import { TPage, useProject } from "../mst";
+import type { TPage } from "../mst";
+import { useDropNode } from "./use-drop-node";
 import { TreeNode } from "./components/node-tree";
 
 interface TreeComponentProps {
@@ -10,24 +10,13 @@ interface TreeComponentProps {
 }
 
 export const TreeView = observer((props: TreeComponentProps) => {
-  const handleDrop = React.useCallback((item) => {
-    const node = props.page.createNode(item.componentType);
-    props.page.addChild(node.id);
-  }, []);
-
-  const [{ isOver, canDrop }, ref] = useDrop({
-    accept: "component",
-    drop: handleDrop,
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: true,
-    }),
-  });
+  const { isOver, drop } = useDropNode({ node: props.page });
 
   return (
-    <div ref={ref} className="tree" style={{ flex: "1", width: "100%" }}>
-      {props.page.children.map((child) => (
-        <TreeNode key={child.id} data={child} />
+    <div ref={drop} className="tree" style={{ flex: "1", width: "100%" }}>
+      <h4>{props.page.title}</h4>
+      {props.page.children.map((node) => (
+        <TreeNode key={node.id} model={node} />
       ))}
     </div>
   );

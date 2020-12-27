@@ -4,7 +4,13 @@ import { useDrag } from "react-dnd";
 import type { TNode } from "../mst";
 import { useProject } from "../mst";
 
-export const useInteractiveNode = (node: TNode) => {
+export const useInteractiveNode = ({
+  node,
+  isOver,
+}: {
+  node: TNode;
+  isOver: boolean;
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [_, drag] = useDrag({
@@ -30,7 +36,8 @@ export const useInteractiveNode = (node: TNode) => {
   };
 
   let style = {
-    boxShadow: node.state.hover ? `#ff00cc 0px 0px 0px 2px inset` : "none",
+    boxShadow:
+      node.state.hover || isOver ? `#ff00cc 0px 0px 0px 2px inset` : "none",
   };
 
   return { events, style, ref: drag(ref) };

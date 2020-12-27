@@ -14,9 +14,5 @@ export const DragComponent: React.FC<DragComponentProps> = ({
     item: { type: "component", componentType: type },
   });
 
-  return (
-    <button ref={ref}>
-      {label}-{type}
-    </button>
-  );
+  return <button ref={ref}>{label}</button>;
 };

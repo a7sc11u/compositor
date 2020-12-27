@@ -7,7 +7,7 @@ import type { HTMLProps } from "../types";
 import type { TText } from "../mst";
 
 interface TextProps extends HTMLProps<"p"> {
-  data: TText;
+  model: TText;
 }
 
 interface StyledTextProps {
@@ -25,18 +25,18 @@ const StyledText = styled.span<StyledTextProps>`
 `;
 
 export const Text = observer(
-  ({ data, ...rest }: TextProps, ref: React.Ref<any>) => {
+  ({ model, ...rest }: TextProps, ref: React.Ref<any>) => {
     return (
       <StyledText
         {...rest}
         as="p"
         ref={ref}
-        familyName={data.fontFamily.familyName}
-        fontSize={`${data.fontSize}px`}
-        fontWeight={data.fontWeight}
-        fontStyle={data.fontStyle}
+        familyName={model.fontFamily.familyName}
+        fontSize={`${model.fontSize}px`}
+        fontWeight={model.fontWeight}
+        fontStyle={model.fontStyle}
       >
-        {data.value}
+        {model.value}
       </StyledText>
     );
   },

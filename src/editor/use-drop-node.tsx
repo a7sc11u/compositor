@@ -1,11 +1,21 @@
+import React from "react";
+import { boolean } from "mobx-state-tree/dist/internal";
 import { useDrop, DropTargetMonitor } from "react-dnd";
+import type { TNode } from "src/mst";
 
-export const useDropNode = (
-  accept: string | string[],
-  canDrop: boolean = true
-) => {
+export const useDropNode = ({
+  node,
+  enabled = true,
+}: {
+  node: TNode;
+  enabled?: boolean;
+}) => {
+  const handleDrop = React.useCallback((item) => {
+    node.createChild(item.componentType);
+  }, []);
+
   const [{ isOver }, drop] = useDrop({
-    accept,
+    accept: "component",
     collect: (monitor) => ({
       isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
     }),
@@ -14,9 +24,9 @@ export const useDropNode = (
         return;
       }
 
-      console.log(item);
+      handleDrop(item);
     },
-    canDrop: () => canDrop,
+    canDrop: () => enabled,
   });
 
   return { drop, isOver };

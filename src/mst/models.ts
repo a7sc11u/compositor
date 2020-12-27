@@ -1,8 +1,9 @@
-import { types, Instance } from "mobx-state-tree";
+import { types, Instance, getParentOfType } from "mobx-state-tree";
+import { uuid } from "./utils";
 
-export const uuid = () =>
-  `${Math.random().toString(36).substring(2) + Date.now().toString(36)}`;
-
+for (let index = 0; index < 10; index++) {
+  console.log(uuid());
+}
 const createComponent = (type) => {
   switch (type) {
     case "text":
@@ -88,21 +89,37 @@ const ElementState = types
     },
   }));
 
-const BoxModel = types.model("BoxModel", {
+const RootNodeModel = types.model("RootNodeModel", {
   id: types.identifier,
-  name: types.maybeNull(types.string),
-  state: ElementState,
-  type: types.literal("box"),
-  color: types.maybe(types.reference(ColorModel)),
-  bg: types.maybe(types.reference(ColorModel)),
+  type: types.literal("root"),
   children: NodeChildren,
 });
+
+const BoxModel = types
+  .model("BoxModel", {
+    id: types.identifier,
+    name: types.maybeNull(types.string),
+    state: ElementState,
+    leaf: types.optional(types.boolean, false),
+    type: types.literal("box"),
+    color: types.maybe(types.reference(ColorModel)),
+    bg: types.maybe(types.reference(ColorModel)),
+    children: NodeChildren,
+  })
+  .actions((model) => ({
+    createChild(type: String) {
+      const parentPage = getParentOfType(model, PageModel);
+      const newNodeId = parentPage.createNode(type);
+      model.children.push(newNodeId);
+    },
+  }));
 
 const TextModel = types
   .model("TextModel", {
     id: types.identifier,
     name: types.maybeNull(types.string),
     state: ElementState,
+    leaf: types.optional(types.boolean, true),
     type: types.literal("text"),
     fontFamily: types.reference(FontFace),
     fontSize: types.number,
@@ -126,15 +143,15 @@ const PageModel = types
     children: NodeChildren,
     nodes: types.array(TypeNode),
   })
-  .actions((model) => ({
+  .actions((model: any) => ({
     createNode(type: String) {
       const node = createComponent(type);
       model.nodes.push(node);
       return node;
     },
-
-    addChild(nodeID: string) {
-      model.children.push(nodeID);
+    createChild(type: String) {
+      const node = model.createNode(type);
+      model.children.push(node.id);
     },
   }));
 
@@ -168,7 +185,7 @@ export type TPage = Instance<typeof PageModel>;
 
 export type TBox = Instance<typeof BoxModel>;
 export type TText = Instance<typeof TextModel>;
-export type TNode = TBox | TText;
+export type TNode = TPage | TBox | TText;
 
 export type TFontFace = Instance<typeof FontFace>;
 export type TColor = Instance<typeof ColorModel>;
