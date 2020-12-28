@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 
 import { useDropNode } from "../use-drop-node";
 import { useInteractiveNode } from "../use-interactive-node";
+import { useNodeStyles } from "../use-node-styles";
 
 import { Box } from "../../components/box";
 
@@ -20,15 +21,16 @@ export const Node = observer((props) => {
     return Comp;
   }, [model]);
 
-  const { drop, isOver } = useDropNode({
+  const { drop } = useDropNode({
     node: model,
     accept: ["new", "node"],
   });
-  const { events, style, ref } = useInteractiveNode({
+  const { events, ref } = useInteractiveNode({
     node: model,
     type: "node",
-    isOver,
   });
+
+  const { style } = useNodeStyles({ node: model });
 
   return (
     <Component model={model} {...events} ref={drop(ref)} style={style}>

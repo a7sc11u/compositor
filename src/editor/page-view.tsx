@@ -41,7 +41,7 @@ export const PageView = observer((props: PageComponentProps) => {
   });
 
   return (
-    <StyledPage ref={drop} isOver={isOver}>
+    <StyledPage ref={drop} isOver={props.page.state.drop}>
       {props.page.children.map((node) =>
         node.leaf ? (
           <Leaf key={node.id} model={node} />

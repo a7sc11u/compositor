@@ -21,10 +21,7 @@ const createComponent = (type) => {
         fontStyle: "italic",
         fontWeight: 700,
         value: "New Text",
-        state: {
-          hover: false,
-          selected: false,
-        },
+        state: { drop: false, hover: false, selected: false },
       });
     case "box":
       return BoxModel.create({
@@ -34,10 +31,7 @@ const createComponent = (type) => {
         bg: "grey",
         leaf: false,
         children: [],
-        state: {
-          hover: false,
-          selected: false,
-        },
+        state: { drop: false, hover: false, selected: false },
       });
   }
 };
@@ -87,10 +81,14 @@ const ColorModel = types.model("ColorModel", {
 
 const ElementState = types
   .model("ElementState", {
+    drop: types.boolean,
     hover: types.boolean,
     selected: types.boolean,
   })
   .actions((model) => ({
+    setDrop(drop: boolean) {
+      model.drop = drop;
+    },
     setHover(hover: boolean) {
       model.hover = hover;
     },
@@ -126,6 +124,7 @@ const BoxModel = types
     createChild(type: String) {
       const node = createComponent(type);
       model.children.push(node);
+      node.setSelected();
     },
   }));
 
@@ -160,6 +159,7 @@ const PageModel = types
   .model("Page", {
     id: types.identifier,
     title: types.string,
+    state: ElementState,
     children: types.late(() => NodeChildren),
   })
   .actions((model: any) => ({
@@ -174,6 +174,7 @@ const PageModel = types
     createChild(type: String) {
       const node = createComponent(type);
       model.children.push(node);
+      node.setSelected();
     },
   }));
 

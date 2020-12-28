@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { boolean } from "mobx-state-tree/dist/internal";
 import { useDrop, DropTargetMonitor } from "react-dnd";
 import type { TNode } from "src/mst";
@@ -21,7 +21,6 @@ export const useDropNode = ({
       }
 
       // if drop to self
-      // new node doesn't have id
       if (item.node.id === node.id) return;
 
       // move child
@@ -30,11 +29,23 @@ export const useDropNode = ({
     [node.id]
   );
 
+  const handleHover = useCallback(
+    (drop) => {
+      node.state.setDrop(drop);
+    },
+    [node.id]
+  );
+
   const [{ isOver }, drop] = useDrop({
     accept: accept,
-    collect: (monitor) => ({
-      isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
-    }),
+    collect: (monitor) => {
+      const isOver = monitor.isOver({ shallow: true }) && monitor.canDrop();
+      handleHover(isOver);
+      return {
+        isOver,
+      };
+    },
+
     drop: (item, monitor) => {
       if (!monitor.isOver()) {
         return;

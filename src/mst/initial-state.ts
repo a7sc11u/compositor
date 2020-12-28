@@ -221,10 +221,16 @@ export const initialState = {
     {
       id: "x1p2q3r",
       title: "A Page",
+      state: {
+        drop: false,
+        hover: false,
+        selected: false,
+      },
       children: [
         {
           id: "nb1",
           state: {
+            drop: false,
             hover: false,
             selected: false,
           },
@@ -234,10 +240,7 @@ export const initialState = {
           children: [
             {
               id: "nt1",
-              state: {
-                hover: false,
-                selected: false,
-              },
+              state: { drop: false, hover: false, selected: false },
               type: "text",
               fontFamily: "averta-bold",
               fontSize: 32,
@@ -247,10 +250,7 @@ export const initialState = {
             },
             {
               id: "nt2",
-              state: {
-                hover: false,
-                selected: false,
-              },
+              state: { drop: false, hover: false, selected: false },
               type: "text",
               fontFamily: "averta-bolditalic",
               fontSize: 32,
@@ -262,10 +262,7 @@ export const initialState = {
         },
         {
           id: "nb2",
-          state: {
-            hover: false,
-            selected: false,
-          },
+          state: { drop: false, hover: false, selected: false },
           name: "box-veggie",
           type: "box",
           color: "black",
@@ -273,10 +270,7 @@ export const initialState = {
           children: [
             {
               id: "nt3",
-              state: {
-                hover: false,
-                selected: false,
-              },
+              state: { drop: false, hover: false, selected: false },
               type: "text",
               fontFamily: "averta-regular",
               fontSize: 32,
@@ -287,10 +281,7 @@ export const initialState = {
             },
             {
               id: "nt4",
-              state: {
-                hover: false,
-                selected: false,
-              },
+              state: { drop: false, hover: false, selected: false },
               type: "text",
               fontFamily: "averta-regularitalic",
               fontSize: 32,
@@ -303,10 +294,7 @@ export const initialState = {
         },
         {
           id: "nb3",
-          state: {
-            hover: false,
-            selected: false,
-          },
+          state: { drop: false, hover: false, selected: false },
           name: "box-veggie",
           type: "box",
           color: "black",

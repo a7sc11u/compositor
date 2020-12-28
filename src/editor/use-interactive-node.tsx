@@ -16,9 +16,6 @@ export const useInteractiveNode = ({
 
   const [_, drag] = useDrag({
     item: { type: type, node: node },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
   });
 
   let events = {
@@ -38,7 +35,7 @@ export const useInteractiveNode = ({
   };
 
   let style = {
-    boxShadow: isOver
+    boxShadow: node.state.drop
       ? `#0000ff 0px 0px 0px 2px inset`
       : node.state.hover
       ? `#00ffcc 0px 0px 0px 2px inset`

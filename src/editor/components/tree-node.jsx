@@ -1,8 +1,11 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { useInteractiveNode } from "../use-interactive-node";
+
 import { TreeLeaf } from "./tree-leaf";
+
+import { useInteractiveNode } from "../use-interactive-node";
 import { useDropNode } from "../use-drop-node";
+import { useNodeStyles } from "../use-node-styles";
 
 export const TreeNode = observer((props) => {
   const { model } = props;
@@ -12,11 +15,13 @@ export const TreeNode = observer((props) => {
     accept: ["new", "tree"],
   });
 
-  const { events, style, ref } = useInteractiveNode({
+  const { events, ref } = useInteractiveNode({
     node: model,
     type: "tree",
     isOver,
   });
+
+  const { style } = useNodeStyles({ node: model });
 
   return (
     <div
