@@ -1,15 +1,21 @@
-import { types, Instance, getParentOfType } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  IAnyModelType,
+  getParent,
+  detach,
+  getPath,
+  getParentOfType,
+} from "mobx-state-tree";
 import { uuid } from "./utils";
 
-for (let index = 0; index < 10; index++) {
-  console.log(uuid());
-}
 const createComponent = (type) => {
   switch (type) {
     case "text":
       return TextModel.create({
         id: uuid(),
         type: "text",
+        leaf: true,
         fontFamily: "averta-regular",
         fontSize: 32,
         fontStyle: "italic",
@@ -17,6 +23,7 @@ const createComponent = (type) => {
         value: "New Text",
         state: {
           hover: false,
+          selected: false,
         },
       });
     case "box":
@@ -25,15 +32,15 @@ const createComponent = (type) => {
         type: "box",
         color: "black",
         bg: "grey",
+        leaf: false,
         children: [],
         state: {
           hover: false,
+          selected: false,
         },
       });
   }
 };
-
-const NodeChildren = types.late(() => types.array(types.reference(TypeNode)));
 
 const typesBaseline = types.union(
   ...[4, 5, 6, 7, 8, 9, 10, 11, 12].map(types.literal)
@@ -70,7 +77,6 @@ const FontFace = types.model("FontFace", {
   italic: types.union(types.boolean, types.array(types.number)),
   metrics: FontMetrics,
   files: types.array(FontFile),
-
   features: types.maybeNull(types.array(types.string)),
 });
 
@@ -82,18 +88,16 @@ const ColorModel = types.model("ColorModel", {
 const ElementState = types
   .model("ElementState", {
     hover: types.boolean,
+    selected: types.boolean,
   })
   .actions((model) => ({
     setHover(hover: boolean) {
       model.hover = hover;
     },
+    setSelected(selected: boolean) {
+      model.selected = selected;
+    },
   }));
-
-const RootNodeModel = types.model("RootNodeModel", {
-  id: types.identifier,
-  type: types.literal("root"),
-  children: NodeChildren,
-});
 
 const BoxModel = types
   .model("BoxModel", {
@@ -104,13 +108,24 @@ const BoxModel = types
     type: types.literal("box"),
     color: types.maybe(types.reference(ColorModel)),
     bg: types.maybe(types.reference(ColorModel)),
-    children: NodeChildren,
+    children: types.late(() => NodeChildren),
   })
   .actions((model) => ({
+    setSelected() {
+      const project = getParentOfType(model, ProjectModel);
+      project.editor.setSelectedNode(model);
+    },
+    addChild(node: IAnyModelType) {
+      const parent: TNode = getParent(getParent(node));
+      parent.detachChild(node);
+      model.children.push(node);
+    },
+    detachChild(node) {
+      return detach(node);
+    },
     createChild(type: String) {
-      const parentPage = getParentOfType(model, PageModel);
-      const newNodeId = parentPage.createNode(type);
-      model.children.push(newNodeId);
+      const node = createComponent(type);
+      model.children.push(node);
     },
   }));
 
@@ -129,29 +144,36 @@ const TextModel = types
     value: types.string,
   })
   .actions((model) => ({
+    setSelected() {
+      const project = getParentOfType(model, ProjectModel);
+      project.editor.setSelectedNode(model);
+    },
     setValue(newValue: string) {
       model.value = newValue;
     },
   }));
 
 const TypeNode = types.union(BoxModel, TextModel);
+const NodeChildren = types.array(TypeNode);
 
 const PageModel = types
   .model("Page", {
     id: types.identifier,
     title: types.string,
-    children: NodeChildren,
-    nodes: types.array(TypeNode),
+    children: types.late(() => NodeChildren),
   })
   .actions((model: any) => ({
-    createNode(type: String) {
-      const node = createComponent(type);
-      model.nodes.push(node);
-      return node;
+    addChild(node: IAnyModelType) {
+      const parent: TNode = getParent(getParent(node));
+      parent.detachChild(node);
+      model.children.push(node);
+    },
+    detachChild(node) {
+      return detach(node);
     },
     createChild(type: String) {
-      const node = model.createNode(type);
-      model.children.push(node.id);
+      const node = createComponent(type);
+      model.children.push(node);
     },
   }));
 
@@ -160,12 +182,17 @@ const EditorState = types
     mode: typesViewMode,
     selectedNode: types.maybeNull(types.reference(TypeNode)),
   })
-  .actions((model) => ({
-    setSelectedNode(newValue: String) {
-      model.selectedNode = newValue;
-    },
+  .actions((model: any) => ({
     clearSelectedNode() {
-      model.selectedNode = null;
+      if (model.selectedNode) {
+        model.selectedNode.state.setSelected(false);
+        model.selectedNode = null;
+      }
+    },
+    setSelectedNode(node: TNode) {
+      model.clearSelectedNode();
+      model.selectedNode = node.id;
+      node.state.setSelected(true);
     },
   }));
 

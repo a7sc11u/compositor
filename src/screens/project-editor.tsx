@@ -28,7 +28,7 @@ export const LeftPane = styled.section`
 
 const LeftPaneTree = styled.section`
   grid-area: top;
-  padding: 8px;
+  padding: 8px 0;
   border-bottom: 3px solid #2a2a2a;
   display: flex;
 `;

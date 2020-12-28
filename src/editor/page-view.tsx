@@ -40,8 +40,6 @@ export const PageView = observer((props: PageComponentProps) => {
     accept: ["new", "node"],
   });
 
-  let style = {};
-
   return (
     <StyledPage ref={drop} isOver={isOver}>
       {props.page.children.map((node) =>

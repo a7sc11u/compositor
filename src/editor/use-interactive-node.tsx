@@ -2,7 +2,6 @@ import { useRef, MouseEvent, useEffect } from "react";
 import { useDrag } from "react-dnd";
 
 import type { TNode } from "../mst";
-import { useProject } from "../mst";
 
 export const useInteractiveNode = ({
   node,
@@ -22,8 +21,6 @@ export const useInteractiveNode = ({
     }),
   });
 
-  const project = useProject();
-
   let events = {
     onMouseOver: (event: MouseEvent) => {
       event.preventDefault();
@@ -36,7 +33,7 @@ export const useInteractiveNode = ({
     onClick: (event: MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
-      project.editor.setSelectedNode(node.id);
+      node.setSelected();
     },
   };
 
@@ -45,7 +42,7 @@ export const useInteractiveNode = ({
       ? `#0000ff 0px 0px 0px 2px inset`
       : node.state.hover
       ? `#00ffcc 0px 0px 0px 2px inset`
-      : project.editor.selectedNode?.id === node.id
+      : node.state.selected
       ? `#00ff00 0px 0px 0px 2px inset`
       : "none",
   };

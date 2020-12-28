@@ -12,14 +12,23 @@ export const useDropNode = ({
   accept: string | string[];
   enabled?: boolean;
 }) => {
-  const handleDrop = React.useCallback((item) => {
-    if (item.type === "new") {
-      node.createChild(item.componentType);
-      return;
-    }
+  const handleDrop = React.useCallback(
+    (item) => {
+      // create new
+      if (item.type === "new") {
+        node.createChild(item.componentType);
+        return;
+      }
 
-    // node.moveToChildren(item.node);
-  }, []);
+      // if drop to self
+      // new node doesn't have id
+      if (item.node.id === node.id) return;
+
+      // move child
+      node.addChild(item.node);
+    },
+    [node.id]
+  );
 
   const [{ isOver }, drop] = useDrop({
     accept: accept,

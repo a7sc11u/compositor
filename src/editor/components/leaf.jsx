@@ -9,7 +9,7 @@ import { Text } from "../../components/text";
 export const Leaf = observer((props) => {
   const { model } = props;
 
-  const { events, style, ref } = useInteractiveNode({node: model, type:'node'});
+  const { events, style, ref } = useInteractiveNode({node: model, type:'node',});
 
   const Component = useMemo(() => {
     let Comp

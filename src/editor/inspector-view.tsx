@@ -15,5 +15,7 @@ export const InspectorView = observer((props: InspectorComponentProps) => {
     // const path = getPath(props.project.editor.selectedNode);
     // console.log(members.properties);
   }
-  return <div>{JSON.stringify(props.project.editor.selectedNode)}</div>;
+  if (!props.project.editor.selectedNode) return null;
+  const { children, ...rest } = props.project.editor.selectedNode;
+  return <div>{JSON.stringify({ ...rest })}</div>;
 });
