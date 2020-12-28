@@ -7,6 +7,8 @@
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
     "@radix-ui/react-polymorphic": "^0.0.1",
     "@types/styled-components": "^5.1.7",
     "fontkit": "^1.8.1",

@@ -29,7 +29,7 @@ export const TreeNode = observer((props) => {
       ref={drop(ref)}
       style={{
         ...style,
-        padding: "8px",
+        padding: "8px 0 4px 8px",
         userSelect: "none",
         backgroundColor: props.model.state.hover ? "#e5e5e5" : "transparent",
       }}

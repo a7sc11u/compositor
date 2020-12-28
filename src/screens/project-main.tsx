@@ -13,7 +13,7 @@ import { ProjectConfig } from "./project-config";
 export const Main = styled.main`
   display: grid;
   height: 100vh;
-  grid-template-rows: 32px 1fr;
+  grid-template-rows: 32px auto;
   grid-template-areas:
     "header"
     "main";
@@ -27,7 +27,11 @@ export const MainHeader = styled.header`
 
 export const MainPane = styled.div`
   grid-area: main;
-  display: flex;
+  position: relative;
+  & > * {
+    position: absolute;
+    inset: 0;
+  }
 `;
 
 export const ProjectMain = () => {
@@ -37,7 +41,7 @@ export const ProjectMain = () => {
   if (!project) return null;
 
   return (
-    <Main onClick={() => project.editor.clearSelectedNode()}>
+    <Main>
       <MainHeader>
         <Link to={`${path}/config`}>Config</Link> &nbsp;&nbsp; | &nbsp; &nbsp;
         <Link to={`${path}/editor`}>Editor</Link>

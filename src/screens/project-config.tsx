@@ -11,7 +11,6 @@ interface ConfigViewComponentProps {}
 
 const StyledEditorView = styled.section`
   display: grid;
-  flex: 1;
   grid-template-columns: 230px 1fr;
   grid-template-areas: "left main";
 `;

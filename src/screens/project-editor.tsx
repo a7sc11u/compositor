@@ -11,7 +11,6 @@ import { ComponentsView } from "../editor/components-view";
 
 const StyledEditorView = styled.section`
   display: grid;
-  flex: 1;
   grid-template-columns: 230px 1fr 240px;
   grid-template-areas: "left main right";
 `;
@@ -20,7 +19,6 @@ export const LeftPane = styled.section`
   grid-area: left;
   display: grid;
   border-right: 3px solid #2a2a2a;
-  flex: 1;
   grid-template-colums: 1fr;
   grid-template-rows: 1fr 1ft;
   grid-template-areas: "top" "bottom";
@@ -30,22 +28,31 @@ const LeftPaneTree = styled.section`
   grid-area: top;
   padding: 0;
   border-bottom: 3px solid #2a2a2a;
-  display: flex;
+  position: relative;
+  & > * {
+    overflow: scroll;
+    position: absolute;
+    inset: 0;
+  }
 `;
 
 const LeftPaneComponents = styled.section`
   grid-area: bottom;
-  padding: 8px;
+  position: relative;
+  & > * {
+    position: absolute;
+    padding: 8px;
+    inset: 0;
+  }
 `;
 
 const PagePane = styled.section`
   grid-area: main;
   position: relative;
-  flex: 1;
-  display: flex;
-  > * {
-    flex: 1;
-    width: 100%;
+  & > * {
+    overflow: scroll;
+    position: absolute;
+    inset: 0;
   }
 `;
 
@@ -75,7 +82,7 @@ export const ProjectEditor = () => {
             <ComponentsView />
           </LeftPaneComponents>
         </LeftPane>
-        <PagePane>
+        <PagePane onClick={() => project.editor.clearSelectedNode()}>
           <PageView page={page} />
         </PagePane>
         <RightPane>
