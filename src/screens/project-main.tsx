@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { useProject } from "../mst";
 
@@ -25,7 +25,7 @@ export const MainHeader = styled.header`
   border-bottom: 3px solid #2a2a2a;
 `;
 
-export const MainPane = styled.div`
+export const MainPane = styled.section`
   grid-area: main;
   position: relative;
   & > * {

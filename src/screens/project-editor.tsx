@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useProject } from "../mst";
@@ -9,26 +9,26 @@ import { TreeView } from "../editor/tree-view";
 import { InspectorView } from "../editor/inspector-view";
 import { ComponentsView } from "../editor/components-view";
 
-const StyledEditorView = styled.section`
+const StyledEditorView = styled.div`
   display: grid;
   grid-template-columns: 230px 1fr 240px;
   grid-template-areas: "left main right";
 `;
 
-export const LeftPane = styled.section`
+export const LeftPane = styled.div`
   grid-area: left;
   display: grid;
   border-right: 3px solid #2a2a2a;
-  grid-template-colums: 1fr;
-  grid-template-rows: 1fr 1ft;
+  grid-template-rows: 1fr 1fr;
   grid-template-areas: "top" "bottom";
 `;
 
 const LeftPaneTree = styled.section`
+  position: relative;
+
   grid-area: top;
   padding: 0;
   border-bottom: 3px solid #2a2a2a;
-  position: relative;
   & > * {
     overflow: scroll;
     position: absolute;
@@ -39,6 +39,7 @@ const LeftPaneTree = styled.section`
 const LeftPaneComponents = styled.section`
   grid-area: bottom;
   position: relative;
+
   & > * {
     position: absolute;
     padding: 8px;

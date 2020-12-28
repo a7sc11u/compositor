@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
 
 import { useProject } from "../mst";

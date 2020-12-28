@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
-import { boolean } from "mobx-state-tree/dist/internal";
-import { useDrop, DropTargetMonitor } from "react-dnd";
+import { useDrop } from "react-dnd";
 import type { TNode } from "src/mst";
 
 export const useDropNode = ({

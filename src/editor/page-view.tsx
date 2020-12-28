@@ -7,7 +7,7 @@ import { Node } from "./components/node";
 import { Leaf } from "./components/leaf";
 
 import { useDropNode } from "./use-drop-node";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 interface PageComponentProps {
   page: TPage;
@@ -18,8 +18,6 @@ interface StyledPageProps {
 }
 
 const StyledPage = styled.article<StyledPageProps>`
-  flex: 1;
-  position: relative;
   &:after {
     content: "";
     display: block;

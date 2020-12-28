@@ -5,7 +5,7 @@ import type { TPage } from "../mst";
 import { useDropNode } from "./use-drop-node";
 import { TreeNode } from "./components/tree-node";
 import { TreeLeaf } from "./components/tree-leaf";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 interface TreeComponentProps {
   page: TPage;
@@ -15,9 +15,8 @@ interface StyledPageProps {
   isOver: boolean;
 }
 
-const StyledPage = styled.section<StyledPageProps>`
+const StyledPage = styled.div<StyledPageProps>`
   flex: 1;
-  position: relative;
   padding: 8px 0;
   &:after {
     content: "";

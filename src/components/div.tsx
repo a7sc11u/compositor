@@ -1,7 +1,7 @@
 import { forwardRefWithAs } from "@radix-ui/react-polymorphic";
 import { observer } from "mobx-react-lite";
 import * as React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import type { HTMLProps } from "../types";
 
