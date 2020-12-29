@@ -4,11 +4,10 @@ import { observer } from "mobx-react-lite";
 import { Div } from "./div";
 import styled from "@emotion/styled";
 
-import type { HTMLProps } from "../types";
-import type { TText } from "../mst";
+import type { ITextNode, HTMLProps } from "../types";
 
 interface TextProps extends HTMLProps<"p"> {
-  model: TText;
+  model: ITextNode;
 }
 
 interface StyledTextProps {

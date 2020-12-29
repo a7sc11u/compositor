@@ -5,8 +5,6 @@ import styled from "@emotion/styled";
 
 import { useProject } from "../mst";
 
-import type { TProject } from "../mst";
-
 import { ProjectEditor } from "./project-editor";
 import { ProjectConfig } from "./project-config";
 

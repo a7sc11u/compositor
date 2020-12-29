@@ -1,7 +1,6 @@
 import { useRef, MouseEvent, useEffect } from "react";
 import { useDrag } from "react-dnd";
-
-import type { TNode } from "../mst";
+import type { TNode } from "../types";
 
 export const useInteractiveNode = ({
   node,

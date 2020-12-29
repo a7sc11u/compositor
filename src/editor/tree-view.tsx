@@ -1,14 +1,14 @@
 import * as React from "react";
 import { observer } from "mobx-react-lite";
 
-import type { TPage } from "../mst";
 import { useDropNode } from "./use-drop-node";
 import { TreeNode } from "./components/tree-node";
 import { TreeLeaf } from "./components/tree-leaf";
 import styled from "@emotion/styled";
+import type { IPage } from "src/types";
 
 interface TreeComponentProps {
-  page: TPage;
+  page: IPage;
 }
 
 interface StyledPageProps {

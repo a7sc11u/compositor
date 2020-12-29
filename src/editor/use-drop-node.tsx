@@ -1,13 +1,13 @@
 import React, { useCallback } from "react";
 import { useDrop } from "react-dnd";
-import type { TNode } from "src/mst";
+import type { TDropableNode } from "../types";
 
 export const useDropNode = ({
   node,
   accept,
   enabled = true,
 }: {
-  node: TNode;
+  node: TDropableNode;
   accept: string | string[];
   enabled?: boolean;
 }) => {

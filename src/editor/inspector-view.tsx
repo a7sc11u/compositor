@@ -1,11 +1,9 @@
 import * as React from "react";
-import { getMembers, getType, getPath } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
-
-import type { TProject } from "../mst";
+import type { IProject } from "src/types";
 
 interface InspectorComponentProps {
-  project: TProject;
+  project: IProject;
 }
 
 export const InspectorView = observer((props: InspectorComponentProps) => {
@@ -16,6 +14,5 @@ export const InspectorView = observer((props: InspectorComponentProps) => {
     // console.log(members.properties);
   }
   if (!props.project.editor.selectedNode) return null;
-  const { children, ...rest } = props.project.editor.selectedNode;
-  return <div>{JSON.stringify({ ...rest })}</div>;
+  return <div>{JSON.stringify(props.project.editor.selectedNode)}</div>;
 });

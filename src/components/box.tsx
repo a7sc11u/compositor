@@ -2,15 +2,13 @@ import * as React from "react";
 import { observer } from "mobx-react-lite";
 import styled from "@emotion/styled";
 
-import type { HTMLProps } from "../types";
-
-import type { TBox } from "../mst";
+import type { IBoxNode, HTMLProps } from "../types";
 
 const Div = styled.div`
   user-select: none;
 `;
 interface BoxProps extends HTMLProps<"div"> {
-  model: TBox;
+  model: IBoxNode;
   children: React.ReactNode;
 }
 

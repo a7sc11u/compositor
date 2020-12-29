@@ -56,22 +56,22 @@ const FontFile = types.model("FontFile", {
 });
 
 const FontMetrics = types.model("FontMetrics", {
-  ascent: types.maybeNull(types.number),
-  descent: types.maybeNull(types.number),
-  capHeight: types.maybeNull(types.number),
-  xHeight: types.maybeNull(types.number),
-  lineGap: types.maybeNull(types.number),
-  unitsPerEm: types.maybeNull(types.number),
+  ascent: types.number,
+  descent: types.number,
+  capHeight: types.number,
+  xHeight: types.number,
+  lineGap: types.number,
+  unitsPerEm: types.number,
 });
 
 const FontFace = types.model("FontFace", {
   id: types.identifier,
   familyName: types.string,
-  weight: types.union(types.number, types.array(types.number)),
-  italic: types.union(types.boolean, types.array(types.number)),
+  weight: types.number,
+  italic: types.boolean,
   metrics: FontMetrics,
   files: types.array(FontFile),
-  features: types.maybeNull(types.array(types.string)),
+  features: types.array(types.string),
 });
 
 const ColorModel = types.model("ColorModel", {
@@ -113,8 +113,8 @@ const BoxModel = types
       const project = getParentOfType(model, ProjectModel);
       project.editor.setSelectedNode(model);
     },
-    addChild(node: IAnyModelType) {
-      const parent: TNode = getParent(getParent(node));
+    addChild(node: any) {
+      const parent: any = getParent(getParent(node));
       parent.detachChild(node);
       model.children.push(node);
     },
@@ -163,12 +163,12 @@ const PageModel = types
     children: types.late(() => NodeChildren),
   })
   .actions((model: any) => ({
-    addChild(node: IAnyModelType) {
-      const parent: TNode = getParent(getParent(node));
+    addChild(node: any) {
+      const parent: any = getParent(getParent(node));
       parent.detachChild(node);
       model.children.push(node);
     },
-    detachChild(node) {
+    detachChild(node: any) {
       return detach(node);
     },
     createChild(type: String) {
@@ -190,7 +190,7 @@ const EditorState = types
         model.selectedNode = null;
       }
     },
-    setSelectedNode(node: TNode) {
+    setSelectedNode(node: any) {
       model.clearSelectedNode();
       model.selectedNode = node.id;
       node.state.setSelected(true);
@@ -207,13 +207,3 @@ const ProjectModel = types.model("Project", {
 });
 
 export { ProjectModel };
-
-export type TProject = Instance<typeof ProjectModel>;
-export type TPage = Instance<typeof PageModel>;
-
-export type TBox = Instance<typeof BoxModel>;
-export type TText = Instance<typeof TextModel>;
-export type TNode = TPage | TBox | TText;
-
-export type TFontFace = Instance<typeof FontFace>;
-export type TColor = Instance<typeof ColorModel>;

@@ -1,8 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { useDrop } from "react-dnd";
 
-import type { TPage } from "../mst";
+import type { IPage } from "../types";
+
 import { Node } from "./components/node";
 import { Leaf } from "./components/leaf";
 
@@ -10,7 +10,7 @@ import { useDropNode } from "./use-drop-node";
 import styled from "@emotion/styled";
 
 interface PageComponentProps {
-  page: TPage;
+  page: IPage;
 }
 
 interface StyledPageProps {
@@ -33,7 +33,7 @@ const StyledPage = styled.article<StyledPageProps>`
 `;
 
 export const PageView = observer((props: PageComponentProps) => {
-  const { isOver, drop } = useDropNode({
+  const { drop } = useDropNode({
     node: props.page,
     accept: ["new", "node"],
   });

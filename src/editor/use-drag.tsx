@@ -1,9 +1,7 @@
 import { useRef, MouseEvent } from "react";
 import { useDrag } from "react-dnd";
 
-import type { TNode } from "../mst";
-
-export const useDragNode = (node: TNode) => {
+export const useDragNode = (node: any) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [_, drag] = useDrag({

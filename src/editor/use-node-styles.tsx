@@ -1,4 +1,4 @@
-import type { TNode } from "../mst";
+import type { TNode } from "../types";
 
 export const useNodeStyles = ({ node }: { node: TNode }) => {
   let style = {
