@@ -58,6 +58,7 @@ export interface ITextNode {
   leaf?: boolean;
   font: IFontFace;
   fontSize: number;
+  leading: number;
   fontWeight: number;
   fontStyle: "normal" | "italic";
   featureSettings?: string[];
@@ -74,6 +75,50 @@ export interface IBoxNode {
   leaf?: boolean;
   color?: IHue;
   bg?: IHue;
+  children?: TNodeChildren;
+  setSelected: () => void;
+  addChild: (node: TNode) => void;
+  detachChild: (node: TNode) => void;
+  createChild: (type: string) => void;
+}
+
+export interface IContainerNode {
+  id: string;
+  type: "container";
+  name?: string;
+  state: INodeState;
+  leaf?: boolean;
+  children?: TNodeChildren;
+  setSelected: () => void;
+  addChild: (node: TNode) => void;
+  detachChild: (node: TNode) => void;
+  createChild: (type: string) => void;
+}
+
+export interface IStackNode {
+  id: string;
+  type: "stack";
+  name?: string;
+  state: INodeState;
+  leaf?: boolean;
+  color?: IHue;
+  bg?: IHue;
+  gap: number;
+  children?: TNodeChildren;
+  setSelected: () => void;
+  addChild: (node: TNode) => void;
+  detachChild: (node: TNode) => void;
+  createChild: (type: string) => void;
+}
+
+export interface IGridNode {
+  id: string;
+  type: "grid";
+  name?: string;
+  state: INodeState;
+  leaf?: boolean;
+  gap: number;
+  columns: number;
   children?: TNodeChildren;
   setSelected: () => void;
   addChild: (node: TNode) => void;
@@ -107,6 +152,12 @@ export interface IProject {
   pages: IPage[];
 }
 
-export type TNode = IBoxNode | ITextNode;
+export type TNode =
+  | IContainerNode
+  | IBoxNode
+  | ITextNode
+  | IStackNode
+  | IGridNode;
+
 export type TDropableNode = IPage | IBoxNode;
 export type TNodeChildren = TNode[];

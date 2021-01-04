@@ -6,6 +6,9 @@ import { useInteractiveNode } from "../use-interactive-node";
 import { useNodeStyles } from "../use-node-styles";
 
 import { Box } from "../../components/box";
+import { Stack } from "../../components/stack";
+import { Grid } from "../../components/grid";
+import { Container } from "../../components/container";
 
 import { Leaf } from "./leaf";
 
@@ -14,6 +17,16 @@ export const Node = observer((props) => {
   const Component = useMemo(() => {
     let Comp;
     switch (model.type) {
+      case "stack":
+        Comp = Stack;
+        break;
+      case "grid":
+        Comp = Grid;
+        break;
+      case "container":
+        Comp = Container;
+        break;
+
       default:
         Comp = Box;
     }

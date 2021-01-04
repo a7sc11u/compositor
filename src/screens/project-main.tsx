@@ -34,15 +34,17 @@ export const MainPane = styled.section`
 
 export const ProjectMain = () => {
   const project = useProject();
-  const { path } = useRouteMatch();
+  const { path, url } = useRouteMatch();
+
+  console.log(path, url);
 
   if (!project) return null;
 
   return (
     <Main>
       <MainHeader>
-        <Link to={`${path}/config`}>Config</Link> &nbsp;&nbsp; | &nbsp; &nbsp;
-        <Link to={`${path}/editor`}>Editor</Link>
+        <Link to={`${url}/config`}>Config</Link> &nbsp;&nbsp; | &nbsp; &nbsp;
+        <Link to={`${url}/editor`}>Editor</Link>
       </MainHeader>
       <MainPane aria-label="Main Pane">
         <Switch>

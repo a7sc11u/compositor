@@ -29,14 +29,14 @@ export const TreeNode = observer((props) => {
       ref={drop(ref)}
       style={{
         ...style,
-        padding: "8px 0 4px 8px",
+        padding: "2px 0 2px 8px",
         userSelect: "none",
         backgroundColor: props.model.state.hover ? "#e5e5e5" : "transparent",
       }}
     >
       {props.model.name || props.model.type}
       {model?.children ? (
-        <div style={{ paddingLeft: "8px" }}>
+        <div>
           {model?.children?.map((node) =>
             node.leaf ? (
               <TreeLeaf key={node.id} model={node} />

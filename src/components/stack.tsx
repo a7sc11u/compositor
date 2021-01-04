@@ -2,18 +2,18 @@ import * as React from "react";
 import { observer } from "mobx-react-lite";
 import styled from "@emotion/styled";
 
-import type { IBoxNode, HTMLProps } from "../types";
+import type { IStackNode, HTMLProps } from "../types";
 
 const Div = styled.div`
   user-select: none;
 `;
-interface BoxProps extends HTMLProps<"div"> {
-  model: IBoxNode;
+interface StackProps extends HTMLProps<"div"> {
+  model: IStackNode;
   children: React.ReactNode;
 }
 
-export const Box = observer(
-  ({ children, style, model, ...rest }: BoxProps, ref: React.Ref<any>) => {
+export const Stack = observer(
+  ({ children, style, model, ...rest }: StackProps, ref: React.Ref<any>) => {
     return (
       <Div
         {...rest}
@@ -22,6 +22,9 @@ export const Box = observer(
           ...style,
           backgroundColor: model.bg?.hex,
           color: model.color?.hex,
+          gap: model.gap,
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         {children}

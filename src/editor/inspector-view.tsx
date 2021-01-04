@@ -7,12 +7,14 @@ interface InspectorComponentProps {
 }
 
 export const InspectorView = observer((props: InspectorComponentProps) => {
-  if (props.project.editor.selectedNode) {
+  const { selectedNode } = props.project.editor;
+  if (selectedNode) {
     // const model = getType(props.project.editor.selectedNode);
     // const members = getMembers(props.project.editor.selectedNode);
     // const path = getPath(props.project.editor.selectedNode);
     // console.log(members.properties);
   }
-  if (!props.project.editor.selectedNode) return null;
-  return <div>{JSON.stringify(props.project.editor.selectedNode)}</div>;
+  if (!selectedNode) return null;
+
+  return <div>{JSON.stringify(selectedNode)}</div>;
 });

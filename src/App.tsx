@@ -15,7 +15,7 @@ function App() {
     <ProjectProvider value={project}>
       <Router>
         <Switch>
-          <Route path="/project">
+          <Route path="/project/:id?">
             <ProjectMain />
           </Route>
           <Route path="/">

@@ -14,7 +14,7 @@ export const TreeLeaf = observer((props) => {
     <div
       style={{
         ...style,
-        paddingBottom: "4px",
+        padding: "2px 0 2px 8px",
         userSelect: "none",
         backgroundColor: model.state.hover ? "#e5e5e5" : "transparent",
       }}

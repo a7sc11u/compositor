@@ -9,8 +9,48 @@ import {
 } from "mobx-state-tree";
 import { uuid } from "./utils";
 
+import { LoremIpsum } from "lorem-ipsum";
+
+const lorem = new LoremIpsum({
+  sentencesPerParagraph: {
+    max: 4,
+    min: 4,
+  },
+  wordsPerSentence: {
+    max: 6,
+    min: 6,
+  },
+});
+
 const createComponent = (type) => {
   switch (type) {
+    case "stack":
+      return StackModel.create({
+        id: uuid(),
+        type: "stack",
+        gap: 24,
+        leaf: false,
+        children: [],
+        state: { drop: false, hover: false, selected: false },
+      });
+    case "grid":
+      return GridModel.create({
+        id: uuid(),
+        type: "grid",
+        gap: 24,
+        columns: 3,
+        leaf: false,
+        children: [],
+        state: { drop: false, hover: false, selected: false },
+      });
+    case "container":
+      return ContainerModel.create({
+        id: uuid(),
+        type: "container",
+        leaf: false,
+        children: [],
+        state: { drop: false, hover: false, selected: false },
+      });
     case "text":
       return TextModel.create({
         id: uuid(),
@@ -18,17 +58,16 @@ const createComponent = (type) => {
         leaf: true,
         font: "averta-regular",
         fontSize: 32,
+        leading: 2,
         fontStyle: "italic",
         fontWeight: 700,
-        value: "New Text",
+        value: lorem.generateParagraphs(1),
         state: { drop: false, hover: false, selected: false },
       });
     case "box":
       return BoxModel.create({
         id: uuid(),
         type: "box",
-        color: "black",
-        bg: "grey",
         leaf: false,
         children: [],
         state: { drop: false, hover: false, selected: false },
@@ -128,6 +167,98 @@ const BoxModel = types
     },
   }));
 
+const ContainerModel = types
+  .model("ContainerModel", {
+    id: types.identifier,
+    name: types.maybeNull(types.string),
+    state: ElementState,
+    leaf: types.optional(types.boolean, false),
+    type: types.literal("container"),
+    children: types.late(() => NodeChildren),
+  })
+  .actions((model) => ({
+    setSelected() {
+      const project = getParentOfType(model, ProjectModel);
+      project.editor.setSelectedNode(model);
+    },
+    addChild(node: any) {
+      const parent: any = getParent(getParent(node));
+      parent.detachChild(node);
+      model.children.push(node);
+    },
+    detachChild(node) {
+      return detach(node);
+    },
+    createChild(type: String) {
+      const node = createComponent(type);
+      model.children.push(node);
+      node.setSelected();
+    },
+  }));
+
+const StackModel = types
+  .model("StackModel", {
+    id: types.identifier,
+    name: types.maybeNull(types.string),
+    state: ElementState,
+    leaf: types.optional(types.boolean, false),
+    type: types.literal("stack"),
+    color: types.maybe(types.reference(ColorModel)),
+    bg: types.maybe(types.reference(ColorModel)),
+    gap: types.number,
+    children: types.late(() => NodeChildren),
+  })
+  .actions((model) => ({
+    setSelected() {
+      const project = getParentOfType(model, ProjectModel);
+      project.editor.setSelectedNode(model);
+    },
+    addChild(node: any) {
+      const parent: any = getParent(getParent(node));
+      parent.detachChild(node);
+      model.children.push(node);
+    },
+    detachChild(node) {
+      return detach(node);
+    },
+    createChild(type: String) {
+      const node = createComponent(type);
+      model.children.push(node);
+      node.setSelected();
+    },
+  }));
+
+const GridModel = types
+  .model("GridModel", {
+    id: types.identifier,
+    name: types.maybeNull(types.string),
+    state: ElementState,
+    leaf: types.optional(types.boolean, false),
+    type: types.literal("grid"),
+    gap: types.number,
+    columns: types.number,
+    children: types.late(() => NodeChildren),
+  })
+  .actions((model) => ({
+    setSelected() {
+      const project = getParentOfType(model, ProjectModel);
+      project.editor.setSelectedNode(model);
+    },
+    addChild(node: any) {
+      const parent: any = getParent(getParent(node));
+      parent.detachChild(node);
+      model.children.push(node);
+    },
+    detachChild(node) {
+      return detach(node);
+    },
+    createChild(type: String) {
+      const node = createComponent(type);
+      model.children.push(node);
+      node.setSelected();
+    },
+  }));
+
 const TextModel = types
   .model("TextModel", {
     id: types.identifier,
@@ -137,6 +268,7 @@ const TextModel = types
     type: types.literal("text"),
     font: types.reference(FontFace),
     fontSize: types.number,
+    leading: types.number,
     fontWeight: types.number,
     fontStyle: types.enumeration("style", ["normal", "italic"]),
     featureSettings: types.maybeNull(types.array(types.string)),
@@ -152,7 +284,13 @@ const TextModel = types
     },
   }));
 
-const TypeNode = types.union(BoxModel, TextModel);
+const TypeNode = types.union(
+  BoxModel,
+  TextModel,
+  StackModel,
+  ContainerModel,
+  GridModel
+);
 const NodeChildren = types.array(TypeNode);
 
 const PageModel = types

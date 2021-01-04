@@ -30,7 +30,7 @@ const MainPane = styled.section`
 `;
 
 export const ProjectConfig = (props: ConfigViewComponentProps) => {
-  const { path } = useRouteMatch();
+  const { path, url } = useRouteMatch();
   const project = useProject();
 
   if (!project) return null;
@@ -40,9 +40,9 @@ export const ProjectConfig = (props: ConfigViewComponentProps) => {
   return (
     <StyledEditorView>
       <LeftPane>
-        <Link to={`${path}/fonts`}>Fonts</Link>
+        <Link to={`${url}/fonts`}>Fonts</Link>
         <br />
-        <Link to={`${path}/type`}>Text Styles</Link>
+        <Link to={`${url}/type`}>Text Styles</Link>
       </LeftPane>
       <MainPane>
         <Switch>
