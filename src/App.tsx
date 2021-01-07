@@ -6,8 +6,6 @@ import { setupRootStore, initialState, ProjectProvider } from "./mst";
 import { ProjectMain } from "./screens/project-main";
 import { ScreenLanding } from "./screens/landing";
 
-import "./App.css";
-
 const project = setupRootStore(initialState);
 
 function App() {
